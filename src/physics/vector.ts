@@ -37,11 +37,30 @@ export function scale2(vector: Vec2, scalar: number): Vec2 {
   return { x: vector.x * scalar, y: vector.y * scalar };
 }
 
+export function rotate2(vector: Vec2, angleRadians: number): Vec2 {
+  assertFiniteComponents([vector.x, vector.y, angleRadians], "Vec2");
+
+  const cos = Math.cos(angleRadians);
+  const sin = Math.sin(angleRadians);
+
+  return {
+    x: vector.x * cos - vector.y * sin,
+    y: vector.x * sin + vector.y * cos
+  };
+}
+
 export function dot2(a: Vec2, b: Vec2): number {
   assertFiniteComponents([a.x, a.y, b.x, b.y], "Vec2");
 
   // Euclidean dot product; components use the same unit basis.
   return a.x * b.x + a.y * b.y;
+}
+
+export function cross2Z(a: Vec2, b: Vec2): number {
+  assertFiniteComponents([a.x, a.y, b.x, b.y], "Vec2");
+
+  // 2D cross product z-component; units are a_unit * b_unit.
+  return a.x * b.y - a.y * b.x;
 }
 
 export function norm2(vector: Vec2): number {
@@ -59,6 +78,19 @@ export function normalize2(vector: Vec2): Vec2 {
   }
 
   return scale2(vector, 1 / magnitude);
+}
+
+export function angleBetween2(a: Vec2, b: Vec2): number {
+  const aMagnitude = norm2(a);
+  const bMagnitude = norm2(b);
+
+  if (aMagnitude === 0 || bMagnitude === 0) {
+    throw new RangeError("Cannot measure angle with a zero vector.");
+  }
+
+  const cosine = dot2(a, b) / (aMagnitude * bMagnitude);
+
+  return Math.acos(Math.min(1, Math.max(-1, cosine)));
 }
 
 export function add3(a: Vec3, b: Vec3): Vec3 {

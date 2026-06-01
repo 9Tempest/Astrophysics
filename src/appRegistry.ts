@@ -28,6 +28,22 @@ export const appRegistry: readonly LearningAppDefinition[] = [
     difficulty: "beginner",
     route: "#/cosmic-scale-explorer",
     component: lazy(() => import("./apps/cosmic-scale-explorer/CosmicScaleExplorer"))
+  },
+  {
+    id: "A2",
+    phase: "A",
+    slug: "vector-field-playground",
+    title: "Vector Field Playground",
+    concepts: [
+      "vectors",
+      "position",
+      "velocity",
+      "acceleration",
+      "Cartesian and polar coordinates"
+    ],
+    difficulty: "beginner",
+    route: "#/vector-field-playground",
+    component: lazy(() => import("./apps/vector-field-playground/VectorFieldPlayground"))
   }
 ];
 

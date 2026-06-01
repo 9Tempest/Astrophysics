@@ -5,7 +5,11 @@ export interface EquationEntry {
 }
 
 interface EquationPanelProps {
-  readonly modelType: "exact formula" | "toy model" | "conceptual diagram";
+  readonly modelType:
+    | "exact formula"
+    | "numerical simulation"
+    | "toy model"
+    | "conceptual diagram";
   readonly equations: readonly EquationEntry[];
   readonly assumptions: readonly string[];
 }
