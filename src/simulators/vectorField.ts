@@ -34,6 +34,18 @@ export interface VectorDiagnostics {
   readonly isVelocityPerpendicularToPosition: boolean;
 }
 
+export interface DragKinematicsOptions {
+  readonly minDisplacementMeters: number;
+  readonly velocitySmoothing: number;
+  readonly accelerationSmoothing: number;
+}
+
+export interface DragKinematicsResult {
+  readonly velocity: Vec2;
+  readonly acceleration: Vec2;
+  readonly didMove: boolean;
+}
+
 export const DEFAULT_VECTOR_STATE: VectorPlaygroundState = {
   position: { x: 4, y: 2 },
   velocity: { x: 0.6, y: 1.2 },
@@ -67,6 +79,22 @@ function assertFiniteVec2(vector: Vec2, label: string): void {
   assertFiniteNumber(vector.y, `${label}.y`);
 }
 
+function assertSmoothingFactor(value: number, label: string): void {
+  assertFiniteNumber(value, label);
+
+  if (value < 0 || value > 1) {
+    throw new RangeError(`${label} must be between 0 and 1.`);
+  }
+}
+
+function lerpVec2(a: Vec2, b: Vec2, alpha: number): Vec2 {
+  assertFiniteVec2(a, "a");
+  assertFiniteVec2(b, "b");
+  assertSmoothingFactor(alpha, "alpha");
+
+  return add2(scale2(a, 1 - alpha), scale2(b, alpha));
+}
+
 export function finiteDifferenceVelocity(
   previousPosition: Vec2,
   currentPosition: Vec2,
@@ -93,6 +121,64 @@ export function finiteDifferenceAcceleration(
   // Exact finite difference estimate: a = Δv / Δt.
   // Units: m/s^2 = (m/s) / s. This estimates average acceleration.
   return scale2(sub2(currentVelocity, previousVelocity), 1 / dtSeconds);
+}
+
+export function estimateDragKinematics(
+  previousPosition: Vec2,
+  currentPosition: Vec2,
+  previousVelocity: Vec2,
+  previousAcceleration: Vec2,
+  dtSeconds: number,
+  options: DragKinematicsOptions
+): DragKinematicsResult {
+  assertFiniteVec2(previousPosition, "previousPosition");
+  assertFiniteVec2(currentPosition, "currentPosition");
+  assertFiniteVec2(previousVelocity, "previousVelocity");
+  assertFiniteVec2(previousAcceleration, "previousAcceleration");
+  assertPositiveDt(dtSeconds);
+  assertFiniteNumber(options.minDisplacementMeters, "minDisplacementMeters");
+  assertSmoothingFactor(options.velocitySmoothing, "velocitySmoothing");
+  assertSmoothingFactor(options.accelerationSmoothing, "accelerationSmoothing");
+
+  if (options.minDisplacementMeters < 0) {
+    throw new RangeError("minDisplacementMeters must be non-negative.");
+  }
+
+  const displacement = sub2(currentPosition, previousPosition);
+
+  if (norm2(displacement) < options.minDisplacementMeters) {
+    return {
+      velocity: previousVelocity,
+      acceleration: previousAcceleration,
+      didMove: false
+    };
+  }
+
+  const rawVelocity = finiteDifferenceVelocity(
+    previousPosition,
+    currentPosition,
+    dtSeconds
+  );
+  const velocity = lerpVec2(
+    previousVelocity,
+    rawVelocity,
+    options.velocitySmoothing
+  );
+  const rawAcceleration = finiteDifferenceAcceleration(
+    previousVelocity,
+    velocity,
+    dtSeconds
+  );
+
+  return {
+    velocity,
+    acceleration: lerpVec2(
+      previousAcceleration,
+      rawAcceleration,
+      options.accelerationSmoothing
+    ),
+    didMove: true
+  };
 }
 
 export function circularVelocity(

@@ -24,8 +24,7 @@ import {
 import {
   DEFAULT_VECTOR_STATE,
   SEEDED_CIRCULAR_SCENARIO,
-  finiteDifferenceAcceleration,
-  finiteDifferenceVelocity,
+  estimateDragKinematics,
   stepVectorPlayground,
   vectorDiagnostics,
   type VectorPlaygroundMode,
@@ -46,10 +45,19 @@ const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 560;
 const WORLD_LIMIT_METERS = 10;
 const FIXED_DT_SECONDS = 1 / 60;
+const DRAG_MIN_DT_SECONDS = 1 / 30;
+const DRAG_MIN_DISPLACEMENT_METERS = 0.08;
+const MAX_VECTOR_DISPLAY_METERS = 7.5;
+const DRAG_KINEMATICS_OPTIONS = {
+  minDisplacementMeters: DRAG_MIN_DISPLACEMENT_METERS,
+  velocitySmoothing: 0.35,
+  accelerationSmoothing: 0.2
+};
 
 interface DragSample {
   readonly position: Vec2;
   readonly velocity: Vec2;
+  readonly acceleration: Vec2;
   readonly timeMs: number;
 }
 
@@ -106,9 +114,14 @@ function drawArrow(
   scale = 1
 ): void {
   const start = worldToCanvas(startWorld);
+  const vectorLength = norm2(vectorWorld);
+  const displayScale =
+    vectorLength === 0
+      ? scale
+      : Math.min(scale, MAX_VECTOR_DISPLAY_METERS / vectorLength);
   const end = worldToCanvas({
-    x: startWorld.x + vectorWorld.x * scale,
-    y: startWorld.y + vectorWorld.y * scale
+    x: startWorld.x + vectorWorld.x * displayScale,
+    y: startWorld.y + vectorWorld.y * displayScale
   });
   const angle = Math.atan2(end.y - start.y, end.x - start.x);
   const headLength = 12;
@@ -395,6 +408,7 @@ export default function VectorFieldPlayground(): JSX.Element {
     dragSampleRef.current = {
       position,
       velocity: { x: 0, y: 0 },
+      acceleration: { x: 0, y: 0 },
       timeMs: event.timeStamp
     };
     setState((currentState) => ({
@@ -417,28 +431,34 @@ export default function VectorFieldPlayground(): JSX.Element {
       return;
     }
 
-    const dtSeconds = Math.max(1 / 240, (event.timeStamp - previous.timeMs) / 1000);
-    const velocity = finiteDifferenceVelocity(
+    const dtSeconds = Math.max(
+      DRAG_MIN_DT_SECONDS,
+      (event.timeStamp - previous.timeMs) / 1000
+    );
+    const kinematics = estimateDragKinematics(
       previous.position,
       position,
-      dtSeconds
-    );
-    const acceleration = finiteDifferenceAcceleration(
       previous.velocity,
-      velocity,
-      dtSeconds
+      previous.acceleration,
+      dtSeconds,
+      DRAG_KINEMATICS_OPTIONS
     );
+
+    if (!kinematics.didMove) {
+      return;
+    }
 
     dragSampleRef.current = {
       position,
-      velocity,
+      velocity: kinematics.velocity,
+      acceleration: kinematics.acceleration,
       timeMs: event.timeStamp
     };
     setState((currentState) => ({
       ...currentState,
       position,
-      velocity,
-      acceleration,
+      velocity: kinematics.velocity,
+      acceleration: kinematics.acceleration,
       timeSeconds: currentState.timeSeconds + dtSeconds
     }));
   }
@@ -512,7 +532,9 @@ export default function VectorFieldPlayground(): JSX.Element {
                   </strong>
                 </div>
                 <div>
-                  <span>Acceleration a</span>
+                  <span>
+                    Acceleration a{mode === "drag" ? " (smoothed estimate)" : ""}
+                  </span>
                   <strong>
                     ({formatNumber(state.acceleration.x)}, {formatNumber(state.acceleration.y)}) m/s²
                   </strong>
@@ -542,7 +564,7 @@ export default function VectorFieldPlayground(): JSX.Element {
         <div className="side-stack">
           <ControlPanel
             title="Motion controls"
-            description="Use fixed-step updates for presets; dragging estimates velocity by finite differences."
+            description="Use fixed-step updates for presets; dragging uses smoothed finite differences."
           >
             <label className="select-control" htmlFor="vector-mode">
               <span>Mode</span>
@@ -558,6 +580,15 @@ export default function VectorFieldPlayground(): JSX.Element {
                 <option value="circular-motion">Circular motion</option>
               </select>
             </label>
+
+            <p className="mode-help">
+              {mode === "drag"
+                ? "Clicking only moves the particle. Tiny click jitter is ignored; drag velocity and acceleration are smoothed estimates."
+                : `${modeLabel(mode)} uses a fixed simulation step of ${formatNumber(
+                    FIXED_DT_SECONDS,
+                    3
+                  )} s.`}
+            </p>
 
             <div className="segmented-control" aria-label="Coordinate readout">
               <button

@@ -3,6 +3,7 @@ import {
   SEEDED_CIRCULAR_SCENARIO,
   circularAcceleration,
   circularVelocity,
+  estimateDragKinematics,
   finiteDifferenceAcceleration,
   finiteDifferenceVelocity,
   stepVectorPlayground,
@@ -27,6 +28,44 @@ describe("vector field playground simulator", () => {
     );
 
     expect(acceleration).toEqual({ x: 2, y: -2 });
+  });
+
+  it("ignores tiny drag displacement so a click does not create fake acceleration", () => {
+    const result = estimateDragKinematics(
+      { x: 1, y: 1 },
+      { x: 1.01, y: 1.01 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      1 / 60,
+      {
+        minDisplacementMeters: 0.08,
+        velocitySmoothing: 0.35,
+        accelerationSmoothing: 0.2
+      }
+    );
+
+    expect(result.didMove).toBe(false);
+    expect(result.velocity).toEqual({ x: 0, y: 0 });
+    expect(result.acceleration).toEqual({ x: 0, y: 0 });
+  });
+
+  it("smooths drag kinematics instead of exposing raw second differences", () => {
+    const result = estimateDragKinematics(
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      0.1,
+      {
+        minDisplacementMeters: 0.08,
+        velocitySmoothing: 0.5,
+        accelerationSmoothing: 0.25
+      }
+    );
+
+    expect(result.didMove).toBe(true);
+    expect(result.velocity.x).toBeCloseTo(5, 12);
+    expect(result.acceleration.x).toBeCloseTo(12.5, 12);
   });
 
   it("keeps circular velocity perpendicular to position", () => {

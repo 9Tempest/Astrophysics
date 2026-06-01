@@ -464,6 +464,15 @@ code {
   gap: 0.55rem;
 }
 
+.mode-help {
+  background: #f2eee4;
+  border: 1px solid #e1d8c8;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.7rem;
+}
+
 .segmented-control {
   background: #f2eee4;
   border: 1px solid #e1d8c8;
