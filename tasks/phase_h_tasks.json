@@ -1,0 +1,319 @@
+{
+  "phase": "H",
+  "title": "宇宙学",
+  "goal": "Treat the whole universe as a dynamical system.",
+  "apps": [
+    {
+      "id": "H1",
+      "phase": "H",
+      "name": "Galaxy Distribution Viewer",
+      "slug": "galaxy-distribution-viewer",
+      "concepts": [
+        "cosmological principle",
+        "homogeneity",
+        "isotropy",
+        "large-scale structure",
+        "averaging"
+      ],
+      "mvp": "Random/clustered galaxy field that appears structured locally and smoother when averaged over larger scales.",
+      "ui": [
+        "zoom control",
+        "averaging window",
+        "galaxy map",
+        "statistics panel"
+      ],
+      "engine": [
+        "random distributions",
+        "cluster generation",
+        "density averaging"
+      ],
+      "challenges": [
+        "Find scale where distribution looks homogeneous",
+        "Compare isotropic vs anisotropic",
+        "Explain averaging"
+      ],
+      "tests": [
+        "density average converges for random distribution",
+        "cluster settings change variance",
+        "seed reproducibility"
+      ],
+      "depends": [
+        "A1"
+      ]
+    },
+    {
+      "id": "H2",
+      "phase": "H",
+      "name": "Expanding Grid Universe",
+      "slug": "expanding-grid-universe",
+      "concepts": [
+        "scale factor",
+        "expanding space",
+        "comoving coordinates",
+        "proper distance",
+        "Hubble flow"
+      ],
+      "mvp": "Grid expands with scale factor a(t), showing galaxies fixed in comoving coordinates while proper distances grow.",
+      "ui": [
+        "scale-factor slider",
+        "grid animation",
+        "comoving/proper readout",
+        "galaxy markers"
+      ],
+      "engine": [
+        "comoving to proper conversion",
+        "simple a(t) presets",
+        "distance tracking"
+      ],
+      "challenges": [
+        "Double scale factor",
+        "Explain why galaxies are not flying through local space",
+        "Compare nearby/far distances"
+      ],
+      "tests": [
+        "proper distance = a * comoving",
+        "comoving coordinates unchanged",
+        "distance ratios scale correctly"
+      ],
+      "depends": [
+        "H1"
+      ]
+    },
+    {
+      "id": "H3",
+      "phase": "H",
+      "name": "Universe Equation Solver",
+      "slug": "universe-equation-solver",
+      "concepts": [
+        "Friedmann equation",
+        "matter",
+        "radiation",
+        "dark energy",
+        "curvature",
+        "cosmic fate"
+      ],
+      "mvp": "Solve simplified Friedmann equation for a(t) from Ω parameters and plot past/future expansion.",
+      "ui": [
+        "Ω sliders",
+        "a(t) plot",
+        "fate label",
+        "component density chart"
+      ],
+      "engine": [
+        "Friedmann RHS",
+        "ODE integration",
+        "parameter normalization/checks"
+      ],
+      "challenges": [
+        "Make accelerating universe",
+        "Make recollapsing toy universe",
+        "Compare matter vs radiation dominated"
+      ],
+      "tests": [
+        "flat parameter sum check",
+        "known simple cases monotonic",
+        "invalid negative density handled"
+      ],
+      "depends": [
+        "H2",
+        "A4"
+      ]
+    },
+    {
+      "id": "H4",
+      "phase": "H",
+      "name": "Cosmic Redshift Calculator",
+      "slug": "cosmic-redshift-calculator",
+      "concepts": [
+        "cosmological redshift",
+        "lookback time",
+        "comoving distance",
+        "scale factor",
+        "distance ladder"
+      ],
+      "mvp": "Input redshift z; output scale factor, approximate lookback time, and distance from selected cosmology.",
+      "ui": [
+        "z input",
+        "distance cards",
+        "timeline marker",
+        "spectrum redshift preview"
+      ],
+      "engine": [
+        "a=1/(1+z)",
+        "numerical integral hooks",
+        "approx cosmology presets"
+      ],
+      "challenges": [
+        "Find scale factor at z=1",
+        "Compare redshift and lookback time",
+        "Shift a spectral line"
+      ],
+      "tests": [
+        "z=0 gives a=1",
+        "a formula exact",
+        "distance monotonic with z"
+      ],
+      "depends": [
+        "H3",
+        "C3"
+      ]
+    },
+    {
+      "id": "H5",
+      "phase": "H",
+      "name": "CMB Pixel Universe",
+      "slug": "cmb-pixel-universe",
+      "concepts": [
+        "cosmic microwave background",
+        "temperature fluctuations",
+        "early universe",
+        "power spectrum",
+        "recombination"
+      ],
+      "mvp": "Generate a sphere/2D map of small temperature fluctuations with adjustable large/small scale power.",
+      "ui": [
+        "CMB map",
+        "power sliders",
+        "histogram",
+        "scale explanation"
+      ],
+      "engine": [
+        "seeded noise",
+        "frequency-domain filtering",
+        "temperature perturbation scaling"
+      ],
+      "challenges": [
+        "Increase large-scale structure",
+        "Suppress small scales",
+        "Explain fluctuation amplitude"
+      ],
+      "tests": [
+        "seed reproducible",
+        "mean near baseline",
+        "power sliders affect variance by band"
+      ],
+      "depends": [
+        "C2",
+        "H3"
+      ]
+    },
+    {
+      "id": "H6",
+      "phase": "H",
+      "name": "Galaxy Rotation Curve Lab",
+      "slug": "galaxy-rotation-curve-lab",
+      "concepts": [
+        "dark matter",
+        "galaxy rotation curves",
+        "mass profiles",
+        "halo",
+        "orbital velocity"
+      ],
+      "mvp": "Compute rotation curves from visible matter alone and with a dark-matter halo.",
+      "ui": [
+        "mass profile controls",
+        "rotation curve plot",
+        "halo toggle",
+        "galaxy diagram"
+      ],
+      "engine": [
+        "v=sqrt(GM(r)/r)",
+        "disk/bulge toy profile",
+        "halo profile toy model"
+      ],
+      "challenges": [
+        "Flatten the rotation curve",
+        "Compare no halo vs halo",
+        "Infer hidden mass"
+      ],
+      "tests": [
+        "velocity increases with enclosed mass",
+        "halo can flatten curve",
+        "no divide-by-zero at r=0"
+      ],
+      "depends": [
+        "B4",
+        "H1"
+      ]
+    },
+    {
+      "id": "H7",
+      "phase": "H",
+      "name": "Dark Energy Slider",
+      "slug": "dark-energy-slider",
+      "concepts": [
+        "dark energy",
+        "cosmological constant",
+        "accelerating expansion",
+        "future universe",
+        "density parameters"
+      ],
+      "mvp": "Adjust ΩΛ and observe future scale-factor acceleration/deceleration.",
+      "ui": [
+        "ΩΛ slider",
+        "future a(t) plot",
+        "acceleration indicator",
+        "comparison presets"
+      ],
+      "engine": [
+        "Friedmann solver reuse",
+        "acceleration heuristic",
+        "scenario comparison"
+      ],
+      "challenges": [
+        "Make expansion accelerate",
+        "Reduce dark energy",
+        "Compare present and far future"
+      ],
+      "tests": [
+        "higher ΩΛ increases late-time expansion rate",
+        "solver stable for valid params",
+        "presets load correctly"
+      ],
+      "depends": [
+        "H3"
+      ]
+    },
+    {
+      "id": "H8",
+      "phase": "H",
+      "name": "Cosmic Timeline Builder",
+      "slug": "cosmic-timeline-builder",
+      "concepts": [
+        "cosmic history",
+        "inflation",
+        "nucleosynthesis",
+        "CMB",
+        "galaxy formation",
+        "stellar eras"
+      ],
+      "mvp": "Interactive logarithmic timeline from early universe to today with cards and linked mini simulations.",
+      "ui": [
+        "log timeline",
+        "event cards",
+        "temperature/scale annotations",
+        "links to apps"
+      ],
+      "engine": [
+        "timeline data",
+        "log time mapping",
+        "cross-link registry"
+      ],
+      "challenges": [
+        "Order key events",
+        "Find CMB epoch",
+        "Connect cosmic phases to apps"
+      ],
+      "tests": [
+        "timeline order valid",
+        "log mapping monotonic",
+        "event links resolve"
+      ],
+      "depends": [
+        "H3",
+        "H4",
+        "H5"
+      ]
+    }
+  ]
+}

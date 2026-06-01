@@ -1,0 +1,317 @@
+{
+  "phase": "C",
+  "title": "波、光、热与恒星",
+  "goal": "Understand how astronomical information comes from light and how stars work.",
+  "apps": [
+    {
+      "id": "C1",
+      "phase": "C",
+      "name": "Wave Tank",
+      "slug": "wave-tank",
+      "concepts": [
+        "wave equation",
+        "frequency",
+        "amplitude",
+        "phase",
+        "interference",
+        "diffraction"
+      ],
+      "mvp": "Finite-difference 1D/2D wave simulation with sources, barriers, and slits.",
+      "ui": [
+        "source painter",
+        "barrier painter",
+        "amplitude heatmap",
+        "pause/step controls"
+      ],
+      "engine": [
+        "finite difference wave equation",
+        "CFL stability check",
+        "boundary conditions"
+      ],
+      "challenges": [
+        "Create constructive interference",
+        "Build a double slit",
+        "Find unstable dt and explain why"
+      ],
+      "tests": [
+        "CFL warning triggers",
+        "wave speed roughly matches parameter",
+        "energy-like quantity behaves reasonably"
+      ],
+      "depends": [
+        "A4"
+      ]
+    },
+    {
+      "id": "C2",
+      "phase": "C",
+      "name": "Spectrum Decomposer",
+      "slug": "spectrum-decomposer",
+      "concepts": [
+        "Fourier transform",
+        "spectra",
+        "frequency domain",
+        "absorption lines",
+        "observational data"
+      ],
+      "mvp": "Users draw waveforms; app computes and displays frequency spectrum via FFT.",
+      "ui": [
+        "waveform editor",
+        "spectrum plot",
+        "component toggles",
+        "stellar absorption mode"
+      ],
+      "engine": [
+        "FFT wrapper",
+        "sampling model",
+        "line absorption overlay"
+      ],
+      "challenges": [
+        "Find hidden frequency",
+        "Reconstruct a square-like wave",
+        "Identify absorption line shift"
+      ],
+      "tests": [
+        "single sine produces peak",
+        "sampling frequency affects Nyquist",
+        "known line positions render correctly"
+      ],
+      "depends": [
+        "C1"
+      ]
+    },
+    {
+      "id": "C3",
+      "phase": "C",
+      "name": "Doppler Shift Visualizer",
+      "slug": "doppler-shift-visualizer",
+      "concepts": [
+        "Doppler effect",
+        "redshift",
+        "blueshift",
+        "radial velocity",
+        "spectral lines"
+      ],
+      "mvp": "Move a star relative to observer and watch spectral lines shift in real time.",
+      "ui": [
+        "velocity slider",
+        "star-observer animation",
+        "spectrum panel",
+        "red/blue labels"
+      ],
+      "engine": [
+        "classical Doppler approximation",
+        "relativistic Doppler option",
+        "line wavelength transform"
+      ],
+      "challenges": [
+        "Infer velocity from shifted line",
+        "Compare approaching/receding",
+        "Toggle classical vs relativistic at high v"
+      ],
+      "tests": [
+        "zero velocity gives no shift",
+        "receding redshifts",
+        "relativistic formula approaches classical for low v"
+      ],
+      "depends": [
+        "C2"
+      ]
+    },
+    {
+      "id": "C4",
+      "phase": "C",
+      "name": "Blackbody Color Lab",
+      "slug": "blackbody-color-lab",
+      "concepts": [
+        "blackbody radiation",
+        "Planck curve",
+        "Wien displacement",
+        "Stefan-Boltzmann law",
+        "stellar color"
+      ],
+      "mvp": "Slider for temperature; plot spectrum and approximate perceived star color.",
+      "ui": [
+        "temperature slider",
+        "spectrum plot",
+        "color swatch",
+        "law cards"
+      ],
+      "engine": [
+        "Planck function",
+        "Wien peak",
+        "luminosity proportionality",
+        "approx color mapping"
+      ],
+      "challenges": [
+        "Find peak wavelength for the Sun",
+        "Compare red dwarf and blue star",
+        "Estimate luminosity change with temperature"
+      ],
+      "tests": [
+        "Wien peak within tolerance",
+        "T^4 luminosity ratio",
+        "Planck values finite for valid inputs"
+      ],
+      "depends": [
+        "C2"
+      ]
+    },
+    {
+      "id": "C5",
+      "phase": "C",
+      "name": "Gas Particle Simulator",
+      "slug": "gas-particle-simulator",
+      "concepts": [
+        "temperature",
+        "pressure",
+        "Maxwell distribution",
+        "statistical mechanics",
+        "thermal equilibrium"
+      ],
+      "mvp": "Particles collide in a box; histogram velocities and compute temperature/pressure.",
+      "ui": [
+        "particle box",
+        "velocity histogram",
+        "temperature readout",
+        "wall pressure meter"
+      ],
+      "engine": [
+        "elastic particle-wall collisions",
+        "optional particle-particle collisions",
+        "temperature estimator"
+      ],
+      "challenges": [
+        "Double temperature and observe distribution",
+        "Compress volume and observe pressure",
+        "Reach equilibrium"
+      ],
+      "tests": [
+        "wall collision conserves kinetic energy",
+        "temperature tracks mean kinetic energy",
+        "histogram normalization"
+      ],
+      "depends": [
+        "B2"
+      ]
+    },
+    {
+      "id": "C6",
+      "phase": "C",
+      "name": "Fusion Energy Budget",
+      "slug": "fusion-energy-budget",
+      "concepts": [
+        "nuclear fusion",
+        "mass-energy equivalence",
+        "hydrogen burning",
+        "energy generation rate",
+        "stellar core"
+      ],
+      "mvp": "Simplified core model showing how tiny mass defect produces large energy release.",
+      "ui": [
+        "core temperature/density sliders",
+        "energy budget bars",
+        "mass defect explanation",
+        "warning for toy model"
+      ],
+      "engine": [
+        "E=mc^2 calculator",
+        "toy reaction rate scaling",
+        "unit conversion"
+      ],
+      "challenges": [
+        "Estimate energy from 1 kg mass defect",
+        "Increase temperature and see rate effect",
+        "Explain toy-model limitations"
+      ],
+      "tests": [
+        "E=mc^2 conversion",
+        "reaction rate monotonic with temperature",
+        "invalid values rejected"
+      ],
+      "depends": [
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "id": "C7",
+      "phase": "C",
+      "name": "Star Balance Simulator",
+      "slug": "star-balance-simulator",
+      "concepts": [
+        "hydrostatic equilibrium",
+        "pressure gradient",
+        "gravity",
+        "stellar layers",
+        "stability"
+      ],
+      "mvp": "Layered spherical star toy model: gravity inward, pressure outward, stable/expand/collapse status.",
+      "ui": [
+        "layer diagram",
+        "mass slider",
+        "pressure profile plot",
+        "stability indicator"
+      ],
+      "engine": [
+        "shell model",
+        "gravity per shell",
+        "pressure gradient approximation",
+        "stability heuristic"
+      ],
+      "challenges": [
+        "Create stable star",
+        "Trigger collapse",
+        "Compare low/high mass"
+      ],
+      "tests": [
+        "gravity increases with enclosed mass",
+        "pressure gradient sign",
+        "status classification deterministic"
+      ],
+      "depends": [
+        "C5",
+        "C6"
+      ]
+    },
+    {
+      "id": "C8",
+      "phase": "C",
+      "name": "HR Diagram Explorer",
+      "slug": "hr-diagram-explorer",
+      "concepts": [
+        "Hertzsprung-Russell diagram",
+        "main sequence",
+        "red giants",
+        "white dwarfs",
+        "stellar evolution"
+      ],
+      "mvp": "Plot stars by temperature and luminosity; animate simplified evolution tracks for different masses.",
+      "ui": [
+        "HR plot",
+        "mass selector",
+        "evolution timeline",
+        "phase labels"
+      ],
+      "engine": [
+        "toy mass-luminosity relation",
+        "phase sequence model",
+        "log-axis plotting"
+      ],
+      "challenges": [
+        "Place the Sun",
+        "Compare lifetime of massive and low-mass stars",
+        "Identify evolutionary phase"
+      ],
+      "tests": [
+        "mass-luminosity monotonic",
+        "log axes valid",
+        "phase sequence order"
+      ],
+      "depends": [
+        "C4",
+        "C7"
+      ]
+    }
+  ]
+}

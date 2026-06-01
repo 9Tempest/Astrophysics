@@ -1,0 +1,279 @@
+{
+  "phase": "B",
+  "title": "经典力学与轨道",
+  "goal": "Build intuition for forces, conservation laws, gravity, orbits, and N-body dynamics.",
+  "apps": [
+    {
+      "id": "B1",
+      "phase": "B",
+      "name": "Force Sandbox",
+      "slug": "force-sandbox",
+      "concepts": [
+        "Newton's laws",
+        "force",
+        "mass",
+        "inertial frames",
+        "acceleration"
+      ],
+      "mvp": "2D particle world with configurable forces: constant, spring, damping, gravity-like attraction.",
+      "ui": [
+        "force palette",
+        "particle inspector",
+        "pause/step/play",
+        "trajectory trails"
+      ],
+      "engine": [
+        "force accumulator",
+        "ParticleState",
+        "mass handling",
+        "fixed-step simulation loop"
+      ],
+      "challenges": [
+        "Reach a target with a constant force",
+        "Tune damping to stop at target",
+        "Create stable spring oscillation"
+      ],
+      "tests": [
+        "F=ma acceleration",
+        "zero force keeps velocity constant",
+        "fixed step deterministic"
+      ],
+      "depends": [
+        "A4"
+      ]
+    },
+    {
+      "id": "B2",
+      "phase": "B",
+      "name": "Conservation Detective",
+      "slug": "conservation-detective",
+      "concepts": [
+        "momentum",
+        "kinetic energy",
+        "elastic collisions",
+        "inelastic collisions",
+        "invariants"
+      ],
+      "mvp": "Collision simulator that reports total momentum and energy before/after collisions.",
+      "ui": [
+        "collision type selector",
+        "before/after bars",
+        "invariant panel",
+        "error warning"
+      ],
+      "engine": [
+        "1D/2D collision solver",
+        "momentum calculator",
+        "energy calculator"
+      ],
+      "challenges": [
+        "Create a perfectly elastic collision",
+        "Detect an inelastic energy loss",
+        "Minimize numerical error"
+      ],
+      "tests": [
+        "elastic collision conserves momentum/energy",
+        "inelastic collision conserves momentum",
+        "edge cases with equal masses"
+      ],
+      "depends": [
+        "B1"
+      ]
+    },
+    {
+      "id": "B3",
+      "phase": "B",
+      "name": "Action Minimizer",
+      "slug": "action-minimizer",
+      "concepts": [
+        "Lagrangian mechanics",
+        "action",
+        "least action",
+        "constraints",
+        "generalized coordinates"
+      ],
+      "mvp": "Users drag path control points between two events and see the action integral change.",
+      "ui": [
+        "path editor",
+        "action graph",
+        "optimize button",
+        "Lagrangian selector"
+      ],
+      "engine": [
+        "discrete action integral",
+        "simple gradient descent",
+        "path interpolation"
+      ],
+      "challenges": [
+        "Find the low-action path",
+        "Compare free particle vs harmonic oscillator",
+        "Explain why straight path wins for free particle"
+      ],
+      "tests": [
+        "free-particle straight path has lower action",
+        "discrete integral convergence",
+        "optimizer reduces action"
+      ],
+      "depends": [
+        "A4",
+        "B2"
+      ]
+    },
+    {
+      "id": "B4",
+      "phase": "B",
+      "name": "Gravity Well Simulator",
+      "slug": "gravity-well-simulator",
+      "concepts": [
+        "inverse-square gravity",
+        "gravitational potential",
+        "escape velocity",
+        "bound and unbound orbits"
+      ],
+      "mvp": "Launch particles around a central mass and classify fall, ellipse, parabola, or hyperbola behavior.",
+      "ui": [
+        "central mass slider",
+        "launch vector editor",
+        "orbit classifier",
+        "energy readout"
+      ],
+      "engine": [
+        "Newtonian gravity",
+        "specific orbital energy",
+        "escape velocity",
+        "Verlet orbit stepping"
+      ],
+      "challenges": [
+        "Find circular orbit velocity",
+        "Reach escape velocity",
+        "Make a highly eccentric ellipse"
+      ],
+      "tests": [
+        "escape velocity formula",
+        "circular orbit speed formula",
+        "energy sign classification"
+      ],
+      "depends": [
+        "A4",
+        "B1"
+      ]
+    },
+    {
+      "id": "B5",
+      "phase": "B",
+      "name": "Kepler Law Verifier",
+      "slug": "kepler-law-verifier",
+      "concepts": [
+        "Kepler's laws",
+        "ellipses",
+        "swept area",
+        "period",
+        "semi-major axis"
+      ],
+      "mvp": "Adjust semi-major axis and eccentricity, then verify equal-area law and T^2 proportional to a^3.",
+      "ui": [
+        "ellipse controls",
+        "swept-area animation",
+        "period plot",
+        "law verification panel"
+      ],
+      "engine": [
+        "ellipse parametric model",
+        "area sweep estimator",
+        "period calculator",
+        "Kepler ratio checker"
+      ],
+      "challenges": [
+        "Keep area rate constant",
+        "Predict period after changing a",
+        "Compare low/high eccentricity"
+      ],
+      "tests": [
+        "T^2/a^3 constant for fixed central mass",
+        "ellipse geometry correct",
+        "area estimator converges"
+      ],
+      "depends": [
+        "B4"
+      ]
+    },
+    {
+      "id": "B6",
+      "phase": "B",
+      "name": "Mini Solar System Engine",
+      "slug": "mini-solar-system-engine",
+      "concepts": [
+        "N-body gravity",
+        "center of mass",
+        "chaos",
+        "orbital stability",
+        "symplectic integration"
+      ],
+      "mvp": "Simulate Sun-Earth-Moon first, then allow adding Jupiter and custom bodies.",
+      "ui": [
+        "body table",
+        "orbit canvas",
+        "integrator switch",
+        "energy/angular momentum plots"
+      ],
+      "engine": [
+        "N-body force calculation",
+        "center-of-mass transform",
+        "Verlet stepping",
+        "RK4 comparison"
+      ],
+      "challenges": [
+        "Keep Earth orbit stable for one year",
+        "Add Jupiter and observe perturbation",
+        "Compare integrator drift"
+      ],
+      "tests": [
+        "pairwise forces equal and opposite",
+        "center of mass constant without external forces",
+        "energy drift below target for small dt"
+      ],
+      "depends": [
+        "B4",
+        "B5"
+      ]
+    },
+    {
+      "id": "B7",
+      "phase": "B",
+      "name": "Tidal Force Explorer",
+      "slug": "tidal-force-explorer",
+      "concepts": [
+        "tidal forces",
+        "gravitational gradients",
+        "Roche limit",
+        "rings",
+        "disruption"
+      ],
+      "mvp": "Show near-side/far-side gravitational differences as a body approaches a massive object.",
+      "ui": [
+        "two-body scene",
+        "tidal vector arrows",
+        "strength slider",
+        "fragmentation animation"
+      ],
+      "engine": [
+        "differential gravity",
+        "Roche-limit estimate",
+        "particle breakup model"
+      ],
+      "challenges": [
+        "Predict disruption distance",
+        "Make rings from fragments",
+        "Compare fluid vs rigid limit"
+      ],
+      "tests": [
+        "tidal gradient increases with proximity",
+        "Roche estimate monotonic with density",
+        "fragment particles conserve approximate momentum"
+      ],
+      "depends": [
+        "B6"
+      ]
+    }
+  ]
+}

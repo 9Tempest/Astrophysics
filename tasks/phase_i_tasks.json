@@ -1,0 +1,398 @@
+{
+  "phase": "I",
+  "title": "虫洞、时间旅行与因果结构",
+  "goal": "Model wormholes and time-travel ideas as metric, energy-condition, and causal-graph problems.",
+  "apps": [
+    {
+      "id": "I1",
+      "phase": "I",
+      "name": "Wormhole Taxonomy Explorer",
+      "slug": "wormhole-taxonomy-explorer",
+      "concepts": [
+        "Einstein-Rosen bridge",
+        "traversable wormhole",
+        "Morris-Thorne wormhole",
+        "shortcut geometry",
+        "stability"
+      ],
+      "mvp": "Compare three wormhole-like concepts and label traversability, stability, and exotic-matter requirements.",
+      "ui": [
+        "mode selector",
+        "comparison cards",
+        "embedding sketch",
+        "caveat panel"
+      ],
+      "engine": [
+        "taxonomy data model",
+        "concept flags",
+        "diagram presets"
+      ],
+      "challenges": [
+        "Classify a wormhole scenario",
+        "Explain traversable vs non-traversable",
+        "Identify missing physics"
+      ],
+      "tests": [
+        "taxonomy flags consistent",
+        "cards render all caveats",
+        "mode switching deterministic"
+      ],
+      "depends": [
+        "F1",
+        "E3"
+      ]
+    },
+    {
+      "id": "I2",
+      "phase": "I",
+      "name": "Wormhole Metric Builder",
+      "slug": "wormhole-metric-builder",
+      "concepts": [
+        "Morris-Thorne metric",
+        "throat",
+        "redshift function",
+        "shape function",
+        "flare-out condition"
+      ],
+      "mvp": "Choose shape/redshift functions and visualize throat geometry plus basic validity checks.",
+      "ui": [
+        "function selector",
+        "parameter sliders",
+        "embedding plot",
+        "condition checker"
+      ],
+      "engine": [
+        "shape function b(r)",
+        "redshift function Phi(r)",
+        "throat solver",
+        "flare-out heuristic"
+      ],
+      "challenges": [
+        "Create a valid throat",
+        "Avoid horizon-like redshift",
+        "Explain shape function"
+      ],
+      "tests": [
+        "throat detection",
+        "flare-out condition sign",
+        "invalid functions handled"
+      ],
+      "depends": [
+        "I1",
+        "E3"
+      ]
+    },
+    {
+      "id": "I3",
+      "phase": "I",
+      "name": "Embedding Diagram Renderer",
+      "slug": "embedding-diagram-renderer",
+      "concepts": [
+        "embedding diagram",
+        "spatial slice",
+        "wormhole throat",
+        "curved geometry",
+        "visual analogy"
+      ],
+      "mvp": "Three.js surface rendering of a wormhole spatial slice with adjustable throat radius.",
+      "ui": [
+        "3D surface",
+        "throat radius slider",
+        "wireframe toggle",
+        "camera controls"
+      ],
+      "engine": [
+        "mesh generation",
+        "embedding function sampler",
+        "domain validation"
+      ],
+      "challenges": [
+        "Increase throat radius",
+        "Compare shallow/deep throat",
+        "Explain what embedding hides"
+      ],
+      "tests": [
+        "mesh finite",
+        "symmetry about throat",
+        "parameter changes regenerate mesh"
+      ],
+      "depends": [
+        "I2"
+      ]
+    },
+    {
+      "id": "I4",
+      "phase": "I",
+      "name": "Energy Condition Checker",
+      "slug": "energy-condition-checker",
+      "concepts": [
+        "null energy condition",
+        "weak energy condition",
+        "stress-energy",
+        "exotic matter",
+        "wormhole constraints"
+      ],
+      "mvp": "Compute simplified energy-condition flags for selected wormhole toy functions.",
+      "ui": [
+        "metric/function selector",
+        "NEC/WEC status cards",
+        "radial plot",
+        "interpretation panel"
+      ],
+      "engine": [
+        "toy stress-energy expressions",
+        "NEC evaluator",
+        "WEC evaluator",
+        "sampling over radius"
+      ],
+      "challenges": [
+        "Find NEC violation",
+        "Compare functions",
+        "Explain exotic matter caveat"
+      ],
+      "tests": [
+        "known toy function violates expected condition",
+        "sampler handles singular points",
+        "status aggregation correct"
+      ],
+      "depends": [
+        "I2"
+      ]
+    },
+    {
+      "id": "I5",
+      "phase": "I",
+      "name": "Traversability Stress Test",
+      "slug": "traversability-stress-test",
+      "concepts": [
+        "tidal forces",
+        "traveler constraints",
+        "proper acceleration",
+        "wormhole traversal",
+        "human-scale limits"
+      ],
+      "mvp": "Simulate a traveler path through a wormhole and flag excessive tidal acceleration in a toy model.",
+      "ui": [
+        "traveler path",
+        "speed slider",
+        "tidal stress meter",
+        "safe/unsafe banner"
+      ],
+      "engine": [
+        "tidal acceleration heuristic",
+        "path sampler",
+        "threshold checker"
+      ],
+      "challenges": [
+        "Find safe traversal parameters",
+        "Increase throat size",
+        "Explain why tidal forces matter"
+      ],
+      "tests": [
+        "stress decreases with larger throat heuristic",
+        "threshold comparison correct",
+        "path sampling finite"
+      ],
+      "depends": [
+        "I2",
+        "B7"
+      ]
+    },
+    {
+      "id": "I6",
+      "phase": "I",
+      "name": "Wormhole Time Machine Lab",
+      "slug": "wormhole-time-machine-lab",
+      "concepts": [
+        "wormhole mouths",
+        "time shift",
+        "time dilation",
+        "closed timelike curves",
+        "causality violation"
+      ],
+      "mvp": "Two wormhole mouths; one is moved relativistically to create time offset. App checks whether a signal loop returns to its own past.",
+      "ui": [
+        "two-mouth diagram",
+        "mouth travel controls",
+        "signal route editor",
+        "CTC warning"
+      ],
+      "engine": [
+        "time dilation from Lorentz gamma",
+        "wormhole mouth time offset",
+        "causal loop detector",
+        "route timing"
+      ],
+      "challenges": [
+        "Create time offset",
+        "Find a closed causal loop",
+        "Avoid CTC with parameter constraints"
+      ],
+      "tests": [
+        "time dilation offset grows with speed/duration",
+        "loop detection identifies past return",
+        "no loop for zero offset"
+      ],
+      "depends": [
+        "D4",
+        "I2",
+        "I7"
+      ]
+    },
+    {
+      "id": "I7",
+      "phase": "I",
+      "name": "Causality Loop Detector",
+      "slug": "causality-loop-detector",
+      "concepts": [
+        "causal graph",
+        "events",
+        "directed cycles",
+        "closed timelike curves",
+        "partial order"
+      ],
+      "mvp": "Users create events and causal links; app detects cycles and labels causality violations.",
+      "ui": [
+        "event graph editor",
+        "edge type selector",
+        "cycle highlight",
+        "explanation log"
+      ],
+      "engine": [
+        "directed graph",
+        "cycle detection",
+        "time-order validator",
+        "reachability"
+      ],
+      "challenges": [
+        "Build an acyclic causal history",
+        "Create a paradoxical loop",
+        "Repair the graph"
+      ],
+      "tests": [
+        "DAG no cycle",
+        "simple cycle found",
+        "self-loop found",
+        "cycle highlighting returns path"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "I8",
+      "phase": "I",
+      "name": "Paradox Simulator",
+      "slug": "paradox-simulator",
+      "concepts": [
+        "grandfather paradox",
+        "self-consistency",
+        "constraints",
+        "SAT/CSP",
+        "many-worlds as interpretation"
+      ],
+      "mvp": "Model causal rules as Boolean constraints and check whether any self-consistent history exists.",
+      "ui": [
+        "rule builder",
+        "event truth table",
+        "solver result",
+        "scenario templates"
+      ],
+      "engine": [
+        "Boolean constraint representation",
+        "brute-force SAT for small N",
+        "conflict explainer"
+      ],
+      "challenges": [
+        "Create inconsistent history",
+        "Repair it",
+        "Find a self-consistent loop"
+      ],
+      "tests": [
+        "known satisfiable scenario",
+        "known unsatisfiable scenario",
+        "solver enumerates assignments"
+      ],
+      "depends": [
+        "I7"
+      ]
+    },
+    {
+      "id": "I9",
+      "phase": "I",
+      "name": "Chronology Protection Toy Model",
+      "slug": "chronology-protection-toy-model",
+      "concepts": [
+        "chronology protection",
+        "vacuum fluctuations",
+        "semiclassical gravity",
+        "CTC formation",
+        "physical instability"
+      ],
+      "mvp": "Conceptual graph: as CTC threshold approaches, toy field energy diverges or grows sharply.",
+      "ui": [
+        "threshold slider",
+        "energy growth plot",
+        "CTC boundary",
+        "caveat panel"
+      ],
+      "engine": [
+        "toy divergence function",
+        "stability flag",
+        "parameter clamps"
+      ],
+      "challenges": [
+        "Approach threshold",
+        "Explain why this is not proof",
+        "Compare stable/unstable settings"
+      ],
+      "tests": [
+        "energy grows near threshold",
+        "no NaN before clamp",
+        "caveat always visible"
+      ],
+      "depends": [
+        "I6",
+        "I7"
+      ]
+    },
+    {
+      "id": "I10",
+      "phase": "I",
+      "name": "Negative Energy Sandbox",
+      "slug": "negative-energy-sandbox",
+      "concepts": [
+        "negative energy",
+        "Casimir-like toy model",
+        "quantum field effects",
+        "semiclassical limitations",
+        "exotic matter"
+      ],
+      "mvp": "Toy Casimir-style panel: plate separation changes a conceptual negative energy density plot; explicitly labels limitations.",
+      "ui": [
+        "plate separation slider",
+        "energy density plot",
+        "scale warning",
+        "wormhole requirement comparison"
+      ],
+      "engine": [
+        "toy inverse-fourth scaling",
+        "unit-scale notes",
+        "safety/caveat text"
+      ],
+      "challenges": [
+        "Decrease separation and observe energy magnitude",
+        "Explain why microscopic effects don't imply macroscopic wormholes",
+        "Connect to NEC checker"
+      ],
+      "tests": [
+        "magnitude increases as separation decreases",
+        "invalid separation rejected",
+        "limitation text rendered"
+      ],
+      "depends": [
+        "I4"
+      ]
+    }
+  ]
+}

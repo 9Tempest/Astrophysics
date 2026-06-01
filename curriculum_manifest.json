@@ -1,0 +1,2267 @@
+{
+  "project": "spacetime-playground",
+  "version": "0.1.0",
+  "purpose": "Interactive physics learning suite from Newtonian mechanics to astrophysics, cosmology, wormholes, and causality.",
+  "phases": {
+    "A": {
+      "title": "数学与模拟基本功",
+      "goal": "Build the numerical and visualization primitives used everywhere else."
+    },
+    "B": {
+      "title": "经典力学与轨道",
+      "goal": "Build intuition for forces, conservation laws, gravity, orbits, and N-body dynamics."
+    },
+    "C": {
+      "title": "波、光、热与恒星",
+      "goal": "Understand how astronomical information comes from light and how stars work."
+    },
+    "D": {
+      "title": "狭义相对论",
+      "goal": "Understand spacetime, time dilation, proper time, and causal structure in flat spacetime."
+    },
+    "E": {
+      "title": "广义相对论前置",
+      "goal": "Convert the intuition of gravity from force to geometry."
+    },
+    "F": {
+      "title": "黑洞与强引力",
+      "goal": "Use metrics, horizons, and geodesic intuition to model black holes."
+    },
+    "G": {
+      "title": "引力波与双星系统",
+      "goal": "Connect compact-object dynamics to observable spacetime waves."
+    },
+    "H": {
+      "title": "宇宙学",
+      "goal": "Treat the whole universe as a dynamical system."
+    },
+    "I": {
+      "title": "虫洞、时间旅行与因果结构",
+      "goal": "Model wormholes and time-travel ideas as metric, energy-condition, and causal-graph problems."
+    }
+  },
+  "apps": [
+    {
+      "id": "A1",
+      "phase": "A",
+      "name": "Cosmic Scale Explorer",
+      "slug": "cosmic-scale-explorer",
+      "concepts": [
+        "SI units",
+        "astronomical units",
+        "light-year",
+        "parsec",
+        "orders of magnitude"
+      ],
+      "mvp": "Log-scale explorer from atomic scale to observable-universe scale with unit conversions.",
+      "ui": [
+        "log-scale slider",
+        "object cards",
+        "unit conversion panel",
+        "scale ruler"
+      ],
+      "engine": [
+        "unit conversion functions",
+        "log10 scale mapping",
+        "reference object data"
+      ],
+      "challenges": [
+        "Find the scale gap between Earth and Sun",
+        "Convert 1 parsec to light-years",
+        "Place AU, ly, pc on the scale"
+      ],
+      "tests": [
+        "unit conversions are reversible within tolerance",
+        "log slider maps monotonically",
+        "known constants match expected significant figures"
+      ],
+      "depends": []
+    },
+    {
+      "id": "A2",
+      "phase": "A",
+      "name": "Vector Field Playground",
+      "slug": "vector-field-playground",
+      "concepts": [
+        "vectors",
+        "position",
+        "velocity",
+        "acceleration",
+        "Cartesian and polar coordinates"
+      ],
+      "mvp": "A 2D canvas where users drag a particle and see position/velocity/acceleration vectors and coordinate transforms.",
+      "ui": [
+        "draggable particle",
+        "vector arrows",
+        "coordinate system toggle",
+        "numeric readout"
+      ],
+      "engine": [
+        "Vec2 type",
+        "cartesianToPolar",
+        "polarToCartesian",
+        "finite-difference velocity estimate"
+      ],
+      "challenges": [
+        "Make velocity perpendicular to position",
+        "Match a requested polar coordinate",
+        "Create circular motion"
+      ],
+      "tests": [
+        "coordinate transforms round-trip",
+        "vector norms and dot products are correct",
+        "angle normalization works"
+      ],
+      "depends": [
+        "A1"
+      ]
+    },
+    {
+      "id": "A3",
+      "phase": "A",
+      "name": "Slope Field Lab",
+      "slug": "slope-field-lab",
+      "concepts": [
+        "derivatives",
+        "integrals",
+        "ODEs",
+        "slope fields",
+        "phase portraits"
+      ],
+      "mvp": "Plot dx/dt=f(x,t) and integrate trajectories from clicked initial conditions.",
+      "ui": [
+        "formula selector",
+        "slope field canvas",
+        "click-to-seed trajectories",
+        "time-step control"
+      ],
+      "engine": [
+        "Euler integrator",
+        "RK4 integrator",
+        "ODE function registry"
+      ],
+      "challenges": [
+        "Find a stable fixed point",
+        "Compare Euler vs RK4",
+        "Predict long-term behavior before running"
+      ],
+      "tests": [
+        "RK4 solves dx/dt=x approximately",
+        "Euler error decreases with smaller dt",
+        "trajectory array has deterministic output"
+      ],
+      "depends": [
+        "A2"
+      ]
+    },
+    {
+      "id": "A4",
+      "phase": "A",
+      "name": "Integrator Battle Arena",
+      "slug": "integrator-battle-arena",
+      "concepts": [
+        "numerical integration",
+        "Euler",
+        "RK4",
+        "Velocity Verlet",
+        "stability",
+        "energy drift"
+      ],
+      "mvp": "Run the same orbit or harmonic oscillator with several integrators and plot energy error over time.",
+      "ui": [
+        "integrator toggles",
+        "trajectory view",
+        "energy error plot",
+        "dt slider"
+      ],
+      "engine": [
+        "Euler",
+        "RK4",
+        "Velocity Verlet",
+        "energy computation"
+      ],
+      "challenges": [
+        "Make Euler fail visibly",
+        "Find dt where RK4 is stable",
+        "Show why symplectic methods help orbital simulations"
+      ],
+      "tests": [
+        "harmonic oscillator energy error behavior",
+        "Verlet time reversibility sanity check",
+        "integrators do not mutate inputs"
+      ],
+      "depends": [
+        "A3"
+      ]
+    },
+    {
+      "id": "B1",
+      "phase": "B",
+      "name": "Force Sandbox",
+      "slug": "force-sandbox",
+      "concepts": [
+        "Newton's laws",
+        "force",
+        "mass",
+        "inertial frames",
+        "acceleration"
+      ],
+      "mvp": "2D particle world with configurable forces: constant, spring, damping, gravity-like attraction.",
+      "ui": [
+        "force palette",
+        "particle inspector",
+        "pause/step/play",
+        "trajectory trails"
+      ],
+      "engine": [
+        "force accumulator",
+        "ParticleState",
+        "mass handling",
+        "fixed-step simulation loop"
+      ],
+      "challenges": [
+        "Reach a target with a constant force",
+        "Tune damping to stop at target",
+        "Create stable spring oscillation"
+      ],
+      "tests": [
+        "F=ma acceleration",
+        "zero force keeps velocity constant",
+        "fixed step deterministic"
+      ],
+      "depends": [
+        "A4"
+      ]
+    },
+    {
+      "id": "B2",
+      "phase": "B",
+      "name": "Conservation Detective",
+      "slug": "conservation-detective",
+      "concepts": [
+        "momentum",
+        "kinetic energy",
+        "elastic collisions",
+        "inelastic collisions",
+        "invariants"
+      ],
+      "mvp": "Collision simulator that reports total momentum and energy before/after collisions.",
+      "ui": [
+        "collision type selector",
+        "before/after bars",
+        "invariant panel",
+        "error warning"
+      ],
+      "engine": [
+        "1D/2D collision solver",
+        "momentum calculator",
+        "energy calculator"
+      ],
+      "challenges": [
+        "Create a perfectly elastic collision",
+        "Detect an inelastic energy loss",
+        "Minimize numerical error"
+      ],
+      "tests": [
+        "elastic collision conserves momentum/energy",
+        "inelastic collision conserves momentum",
+        "edge cases with equal masses"
+      ],
+      "depends": [
+        "B1"
+      ]
+    },
+    {
+      "id": "B3",
+      "phase": "B",
+      "name": "Action Minimizer",
+      "slug": "action-minimizer",
+      "concepts": [
+        "Lagrangian mechanics",
+        "action",
+        "least action",
+        "constraints",
+        "generalized coordinates"
+      ],
+      "mvp": "Users drag path control points between two events and see the action integral change.",
+      "ui": [
+        "path editor",
+        "action graph",
+        "optimize button",
+        "Lagrangian selector"
+      ],
+      "engine": [
+        "discrete action integral",
+        "simple gradient descent",
+        "path interpolation"
+      ],
+      "challenges": [
+        "Find the low-action path",
+        "Compare free particle vs harmonic oscillator",
+        "Explain why straight path wins for free particle"
+      ],
+      "tests": [
+        "free-particle straight path has lower action",
+        "discrete integral convergence",
+        "optimizer reduces action"
+      ],
+      "depends": [
+        "A4",
+        "B2"
+      ]
+    },
+    {
+      "id": "B4",
+      "phase": "B",
+      "name": "Gravity Well Simulator",
+      "slug": "gravity-well-simulator",
+      "concepts": [
+        "inverse-square gravity",
+        "gravitational potential",
+        "escape velocity",
+        "bound and unbound orbits"
+      ],
+      "mvp": "Launch particles around a central mass and classify fall, ellipse, parabola, or hyperbola behavior.",
+      "ui": [
+        "central mass slider",
+        "launch vector editor",
+        "orbit classifier",
+        "energy readout"
+      ],
+      "engine": [
+        "Newtonian gravity",
+        "specific orbital energy",
+        "escape velocity",
+        "Verlet orbit stepping"
+      ],
+      "challenges": [
+        "Find circular orbit velocity",
+        "Reach escape velocity",
+        "Make a highly eccentric ellipse"
+      ],
+      "tests": [
+        "escape velocity formula",
+        "circular orbit speed formula",
+        "energy sign classification"
+      ],
+      "depends": [
+        "A4",
+        "B1"
+      ]
+    },
+    {
+      "id": "B5",
+      "phase": "B",
+      "name": "Kepler Law Verifier",
+      "slug": "kepler-law-verifier",
+      "concepts": [
+        "Kepler's laws",
+        "ellipses",
+        "swept area",
+        "period",
+        "semi-major axis"
+      ],
+      "mvp": "Adjust semi-major axis and eccentricity, then verify equal-area law and T^2 proportional to a^3.",
+      "ui": [
+        "ellipse controls",
+        "swept-area animation",
+        "period plot",
+        "law verification panel"
+      ],
+      "engine": [
+        "ellipse parametric model",
+        "area sweep estimator",
+        "period calculator",
+        "Kepler ratio checker"
+      ],
+      "challenges": [
+        "Keep area rate constant",
+        "Predict period after changing a",
+        "Compare low/high eccentricity"
+      ],
+      "tests": [
+        "T^2/a^3 constant for fixed central mass",
+        "ellipse geometry correct",
+        "area estimator converges"
+      ],
+      "depends": [
+        "B4"
+      ]
+    },
+    {
+      "id": "B6",
+      "phase": "B",
+      "name": "Mini Solar System Engine",
+      "slug": "mini-solar-system-engine",
+      "concepts": [
+        "N-body gravity",
+        "center of mass",
+        "chaos",
+        "orbital stability",
+        "symplectic integration"
+      ],
+      "mvp": "Simulate Sun-Earth-Moon first, then allow adding Jupiter and custom bodies.",
+      "ui": [
+        "body table",
+        "orbit canvas",
+        "integrator switch",
+        "energy/angular momentum plots"
+      ],
+      "engine": [
+        "N-body force calculation",
+        "center-of-mass transform",
+        "Verlet stepping",
+        "RK4 comparison"
+      ],
+      "challenges": [
+        "Keep Earth orbit stable for one year",
+        "Add Jupiter and observe perturbation",
+        "Compare integrator drift"
+      ],
+      "tests": [
+        "pairwise forces equal and opposite",
+        "center of mass constant without external forces",
+        "energy drift below target for small dt"
+      ],
+      "depends": [
+        "B4",
+        "B5"
+      ]
+    },
+    {
+      "id": "B7",
+      "phase": "B",
+      "name": "Tidal Force Explorer",
+      "slug": "tidal-force-explorer",
+      "concepts": [
+        "tidal forces",
+        "gravitational gradients",
+        "Roche limit",
+        "rings",
+        "disruption"
+      ],
+      "mvp": "Show near-side/far-side gravitational differences as a body approaches a massive object.",
+      "ui": [
+        "two-body scene",
+        "tidal vector arrows",
+        "strength slider",
+        "fragmentation animation"
+      ],
+      "engine": [
+        "differential gravity",
+        "Roche-limit estimate",
+        "particle breakup model"
+      ],
+      "challenges": [
+        "Predict disruption distance",
+        "Make rings from fragments",
+        "Compare fluid vs rigid limit"
+      ],
+      "tests": [
+        "tidal gradient increases with proximity",
+        "Roche estimate monotonic with density",
+        "fragment particles conserve approximate momentum"
+      ],
+      "depends": [
+        "B6"
+      ]
+    },
+    {
+      "id": "C1",
+      "phase": "C",
+      "name": "Wave Tank",
+      "slug": "wave-tank",
+      "concepts": [
+        "wave equation",
+        "frequency",
+        "amplitude",
+        "phase",
+        "interference",
+        "diffraction"
+      ],
+      "mvp": "Finite-difference 1D/2D wave simulation with sources, barriers, and slits.",
+      "ui": [
+        "source painter",
+        "barrier painter",
+        "amplitude heatmap",
+        "pause/step controls"
+      ],
+      "engine": [
+        "finite difference wave equation",
+        "CFL stability check",
+        "boundary conditions"
+      ],
+      "challenges": [
+        "Create constructive interference",
+        "Build a double slit",
+        "Find unstable dt and explain why"
+      ],
+      "tests": [
+        "CFL warning triggers",
+        "wave speed roughly matches parameter",
+        "energy-like quantity behaves reasonably"
+      ],
+      "depends": [
+        "A4"
+      ]
+    },
+    {
+      "id": "C2",
+      "phase": "C",
+      "name": "Spectrum Decomposer",
+      "slug": "spectrum-decomposer",
+      "concepts": [
+        "Fourier transform",
+        "spectra",
+        "frequency domain",
+        "absorption lines",
+        "observational data"
+      ],
+      "mvp": "Users draw waveforms; app computes and displays frequency spectrum via FFT.",
+      "ui": [
+        "waveform editor",
+        "spectrum plot",
+        "component toggles",
+        "stellar absorption mode"
+      ],
+      "engine": [
+        "FFT wrapper",
+        "sampling model",
+        "line absorption overlay"
+      ],
+      "challenges": [
+        "Find hidden frequency",
+        "Reconstruct a square-like wave",
+        "Identify absorption line shift"
+      ],
+      "tests": [
+        "single sine produces peak",
+        "sampling frequency affects Nyquist",
+        "known line positions render correctly"
+      ],
+      "depends": [
+        "C1"
+      ]
+    },
+    {
+      "id": "C3",
+      "phase": "C",
+      "name": "Doppler Shift Visualizer",
+      "slug": "doppler-shift-visualizer",
+      "concepts": [
+        "Doppler effect",
+        "redshift",
+        "blueshift",
+        "radial velocity",
+        "spectral lines"
+      ],
+      "mvp": "Move a star relative to observer and watch spectral lines shift in real time.",
+      "ui": [
+        "velocity slider",
+        "star-observer animation",
+        "spectrum panel",
+        "red/blue labels"
+      ],
+      "engine": [
+        "classical Doppler approximation",
+        "relativistic Doppler option",
+        "line wavelength transform"
+      ],
+      "challenges": [
+        "Infer velocity from shifted line",
+        "Compare approaching/receding",
+        "Toggle classical vs relativistic at high v"
+      ],
+      "tests": [
+        "zero velocity gives no shift",
+        "receding redshifts",
+        "relativistic formula approaches classical for low v"
+      ],
+      "depends": [
+        "C2"
+      ]
+    },
+    {
+      "id": "C4",
+      "phase": "C",
+      "name": "Blackbody Color Lab",
+      "slug": "blackbody-color-lab",
+      "concepts": [
+        "blackbody radiation",
+        "Planck curve",
+        "Wien displacement",
+        "Stefan-Boltzmann law",
+        "stellar color"
+      ],
+      "mvp": "Slider for temperature; plot spectrum and approximate perceived star color.",
+      "ui": [
+        "temperature slider",
+        "spectrum plot",
+        "color swatch",
+        "law cards"
+      ],
+      "engine": [
+        "Planck function",
+        "Wien peak",
+        "luminosity proportionality",
+        "approx color mapping"
+      ],
+      "challenges": [
+        "Find peak wavelength for the Sun",
+        "Compare red dwarf and blue star",
+        "Estimate luminosity change with temperature"
+      ],
+      "tests": [
+        "Wien peak within tolerance",
+        "T^4 luminosity ratio",
+        "Planck values finite for valid inputs"
+      ],
+      "depends": [
+        "C2"
+      ]
+    },
+    {
+      "id": "C5",
+      "phase": "C",
+      "name": "Gas Particle Simulator",
+      "slug": "gas-particle-simulator",
+      "concepts": [
+        "temperature",
+        "pressure",
+        "Maxwell distribution",
+        "statistical mechanics",
+        "thermal equilibrium"
+      ],
+      "mvp": "Particles collide in a box; histogram velocities and compute temperature/pressure.",
+      "ui": [
+        "particle box",
+        "velocity histogram",
+        "temperature readout",
+        "wall pressure meter"
+      ],
+      "engine": [
+        "elastic particle-wall collisions",
+        "optional particle-particle collisions",
+        "temperature estimator"
+      ],
+      "challenges": [
+        "Double temperature and observe distribution",
+        "Compress volume and observe pressure",
+        "Reach equilibrium"
+      ],
+      "tests": [
+        "wall collision conserves kinetic energy",
+        "temperature tracks mean kinetic energy",
+        "histogram normalization"
+      ],
+      "depends": [
+        "B2"
+      ]
+    },
+    {
+      "id": "C6",
+      "phase": "C",
+      "name": "Fusion Energy Budget",
+      "slug": "fusion-energy-budget",
+      "concepts": [
+        "nuclear fusion",
+        "mass-energy equivalence",
+        "hydrogen burning",
+        "energy generation rate",
+        "stellar core"
+      ],
+      "mvp": "Simplified core model showing how tiny mass defect produces large energy release.",
+      "ui": [
+        "core temperature/density sliders",
+        "energy budget bars",
+        "mass defect explanation",
+        "warning for toy model"
+      ],
+      "engine": [
+        "E=mc^2 calculator",
+        "toy reaction rate scaling",
+        "unit conversion"
+      ],
+      "challenges": [
+        "Estimate energy from 1 kg mass defect",
+        "Increase temperature and see rate effect",
+        "Explain toy-model limitations"
+      ],
+      "tests": [
+        "E=mc^2 conversion",
+        "reaction rate monotonic with temperature",
+        "invalid values rejected"
+      ],
+      "depends": [
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "id": "C7",
+      "phase": "C",
+      "name": "Star Balance Simulator",
+      "slug": "star-balance-simulator",
+      "concepts": [
+        "hydrostatic equilibrium",
+        "pressure gradient",
+        "gravity",
+        "stellar layers",
+        "stability"
+      ],
+      "mvp": "Layered spherical star toy model: gravity inward, pressure outward, stable/expand/collapse status.",
+      "ui": [
+        "layer diagram",
+        "mass slider",
+        "pressure profile plot",
+        "stability indicator"
+      ],
+      "engine": [
+        "shell model",
+        "gravity per shell",
+        "pressure gradient approximation",
+        "stability heuristic"
+      ],
+      "challenges": [
+        "Create stable star",
+        "Trigger collapse",
+        "Compare low/high mass"
+      ],
+      "tests": [
+        "gravity increases with enclosed mass",
+        "pressure gradient sign",
+        "status classification deterministic"
+      ],
+      "depends": [
+        "C5",
+        "C6"
+      ]
+    },
+    {
+      "id": "C8",
+      "phase": "C",
+      "name": "HR Diagram Explorer",
+      "slug": "hr-diagram-explorer",
+      "concepts": [
+        "Hertzsprung-Russell diagram",
+        "main sequence",
+        "red giants",
+        "white dwarfs",
+        "stellar evolution"
+      ],
+      "mvp": "Plot stars by temperature and luminosity; animate simplified evolution tracks for different masses.",
+      "ui": [
+        "HR plot",
+        "mass selector",
+        "evolution timeline",
+        "phase labels"
+      ],
+      "engine": [
+        "toy mass-luminosity relation",
+        "phase sequence model",
+        "log-axis plotting"
+      ],
+      "challenges": [
+        "Place the Sun",
+        "Compare lifetime of massive and low-mass stars",
+        "Identify evolutionary phase"
+      ],
+      "tests": [
+        "mass-luminosity monotonic",
+        "log axes valid",
+        "phase sequence order"
+      ],
+      "depends": [
+        "C4",
+        "C7"
+      ]
+    },
+    {
+      "id": "D1",
+      "phase": "D",
+      "name": "Light Clock Simulator",
+      "slug": "light-clock-simulator",
+      "concepts": [
+        "constancy of light speed",
+        "time dilation",
+        "inertial frames",
+        "light clock"
+      ],
+      "mvp": "Compare a stationary light clock and moving light clock with path-length geometry.",
+      "ui": [
+        "speed slider",
+        "two observer views",
+        "gamma readout",
+        "light path trace"
+      ],
+      "engine": [
+        "Lorentz gamma",
+        "light clock geometry",
+        "units with c=1 option"
+      ],
+      "challenges": [
+        "Find speed for gamma=2",
+        "Explain longer light path",
+        "Compare proper and coordinate time"
+      ],
+      "tests": [
+        "gamma(0)=1",
+        "gamma increases with v",
+        "reject v>=c"
+      ],
+      "depends": [
+        "C1"
+      ]
+    },
+    {
+      "id": "D2",
+      "phase": "D",
+      "name": "Lorentz Transformer",
+      "slug": "lorentz-transformer",
+      "concepts": [
+        "Lorentz transformation",
+        "space-time mixing",
+        "simultaneity",
+        "inertial frames"
+      ],
+      "mvp": "Input events and velocity; display transformed coordinates and tilted spacetime grid.",
+      "ui": [
+        "event table",
+        "velocity slider",
+        "Minkowski grid",
+        "coordinate readout"
+      ],
+      "engine": [
+        "lorentzTransform1D",
+        "inverse transform",
+        "interval checker"
+      ],
+      "challenges": [
+        "Make two events simultaneous in one frame",
+        "Verify inverse transform",
+        "Preserve spacetime interval"
+      ],
+      "tests": [
+        "interval invariant",
+        "inverse recovers original",
+        "low-speed limit approx identity"
+      ],
+      "depends": [
+        "D1"
+      ]
+    },
+    {
+      "id": "D3",
+      "phase": "D",
+      "name": "Spacetime Diagram Editor",
+      "slug": "spacetime-diagram-editor",
+      "concepts": [
+        "worldlines",
+        "light cones",
+        "timelike/spacelike/lightlike intervals",
+        "causality"
+      ],
+      "mvp": "Users draw events and worldlines; app classifies intervals and causal reachability.",
+      "ui": [
+        "event editor",
+        "light-cone overlay",
+        "worldline drawing",
+        "interval classifier"
+      ],
+      "engine": [
+        "minkowskiInterval",
+        "interval classifier",
+        "causal reachability"
+      ],
+      "challenges": [
+        "Connect two timelike events",
+        "Find spacelike separated pair",
+        "Draw physically possible worldline"
+      ],
+      "tests": [
+        "classification thresholds",
+        "light cone boundary",
+        "worldline speed constraint"
+      ],
+      "depends": [
+        "D2"
+      ]
+    },
+    {
+      "id": "D4",
+      "phase": "D",
+      "name": "Proper Time Race",
+      "slug": "proper-time-race",
+      "concepts": [
+        "proper time",
+        "twin paradox",
+        "worldline length",
+        "accelerated turnaround"
+      ],
+      "mvp": "Two travelers follow different worldlines and reunite; app computes elapsed proper time.",
+      "ui": [
+        "worldline editor",
+        "proper-time counters",
+        "traveler avatars",
+        "speed warnings"
+      ],
+      "engine": [
+        "piecewise worldline integration",
+        "proper time integral",
+        "speed validator"
+      ],
+      "challenges": [
+        "Make traveler age less",
+        "Compare straight vs kinked worldline",
+        "Avoid superluminal segments"
+      ],
+      "tests": [
+        "straight inertial path maximizes proper time between timelike events",
+        "zero velocity proper=time",
+        "invalid paths rejected"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "D5",
+      "phase": "D",
+      "name": "Relativistic Rocket Lab",
+      "slug": "relativistic-rocket-lab",
+      "concepts": [
+        "relativistic energy",
+        "momentum",
+        "velocity limit",
+        "rocket acceleration",
+        "rapidity"
+      ],
+      "mvp": "Continuous acceleration model showing speed approaching but not exceeding light speed.",
+      "ui": [
+        "thrust slider",
+        "velocity/gamma plot",
+        "energy meter",
+        "mission clock"
+      ],
+      "engine": [
+        "relativistic velocity update",
+        "gamma",
+        "energy-momentum relation"
+      ],
+      "challenges": [
+        "Reach 0.9c",
+        "Estimate energy cost",
+        "Compare proper and coordinate acceleration toy models"
+      ],
+      "tests": [
+        "velocity remains below c",
+        "energy increases with gamma",
+        "low-speed kinetic energy approximation"
+      ],
+      "depends": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "id": "E1",
+      "phase": "E",
+      "name": "Einstein Elevator",
+      "slug": "einstein-elevator",
+      "concepts": [
+        "equivalence principle",
+        "acceleration",
+        "free fall",
+        "local inertial frames",
+        "gravity vs acceleration"
+      ],
+      "mvp": "Elevator scenarios: resting on Earth, accelerating in space, and free-falling.",
+      "ui": [
+        "scenario selector",
+        "ball/light ray animation",
+        "clock visualization",
+        "observer notes"
+      ],
+      "engine": [
+        "constant acceleration kinematics",
+        "local frame comparison",
+        "light ray bending cartoon model"
+      ],
+      "challenges": [
+        "Identify indistinguishable cases",
+        "Predict ball path",
+        "Explain local vs global limitation"
+      ],
+      "tests": [
+        "free-fall relative acceleration zero",
+        "accelerated frame pseudo-force",
+        "scenario labels consistent"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "E2",
+      "phase": "E",
+      "name": "Geodesic on Surfaces",
+      "slug": "geodesic-on-surfaces",
+      "concepts": [
+        "geodesics",
+        "curved surfaces",
+        "intrinsic geometry",
+        "Christoffel symbols",
+        "shortest paths"
+      ],
+      "mvp": "Launch particles on sphere, saddle, and torus surfaces along geodesic paths.",
+      "ui": [
+        "surface selector",
+        "launch controls",
+        "3D surface view",
+        "geodesic trace"
+      ],
+      "engine": [
+        "surface parameterization",
+        "geodesic ODE",
+        "numerical integration"
+      ],
+      "challenges": [
+        "Find great circle",
+        "Compare Euclidean straightness vs surface straightness",
+        "Observe geodesic divergence"
+      ],
+      "tests": [
+        "sphere great circle sanity check",
+        "state remains on parameter domain",
+        "stepper deterministic"
+      ],
+      "depends": [
+        "A4",
+        "D3"
+      ]
+    },
+    {
+      "id": "E3",
+      "phase": "E",
+      "name": "Metric Playground",
+      "slug": "metric-playground",
+      "concepts": [
+        "metric tensor",
+        "distance",
+        "spacetime interval",
+        "Euclidean",
+        "Minkowski",
+        "spherical coordinates"
+      ],
+      "mvp": "Choose a metric and see how the same coordinate difference has different length/interval.",
+      "ui": [
+        "metric selector",
+        "coordinate delta editor",
+        "distance/interval result",
+        "matrix display"
+      ],
+      "engine": [
+        "metric matrix functions",
+        "bilinear form",
+        "signature classifier"
+      ],
+      "challenges": [
+        "Find zero interval in Minkowski",
+        "Compare Euclidean vs spherical distance",
+        "Explain metric signature"
+      ],
+      "tests": [
+        "Euclidean norm",
+        "Minkowski interval",
+        "matrix symmetry"
+      ],
+      "depends": [
+        "D2",
+        "E2"
+      ]
+    },
+    {
+      "id": "E4",
+      "phase": "E",
+      "name": "Tensor Transformation Lab",
+      "slug": "tensor-transformation-lab",
+      "concepts": [
+        "tensors",
+        "coordinate transformations",
+        "components vs objects",
+        "index notation",
+        "Lorentz transforms"
+      ],
+      "mvp": "Transform vector/tensor components under rotations, scalings, and Lorentz boosts while invariant quantities remain fixed.",
+      "ui": [
+        "basis editor",
+        "component table",
+        "before/after diagram",
+        "invariant checker"
+      ],
+      "engine": [
+        "matrix transforms",
+        "covariant/contravariant toy model",
+        "invariant contraction"
+      ],
+      "challenges": [
+        "Preserve vector length under rotation",
+        "Show components change under basis change",
+        "Use Lorentz boost and preserve interval"
+      ],
+      "tests": [
+        "rotation preserves Euclidean norm",
+        "Lorentz preserves Minkowski interval",
+        "inverse transform consistency"
+      ],
+      "depends": [
+        "E3"
+      ]
+    },
+    {
+      "id": "E5",
+      "phase": "E",
+      "name": "Parallel Transport Game",
+      "slug": "parallel-transport-game",
+      "concepts": [
+        "curvature",
+        "parallel transport",
+        "holonomy",
+        "sphere",
+        "local flatness"
+      ],
+      "mvp": "Move an arrow around a closed path on a sphere and show it returns rotated.",
+      "ui": [
+        "sphere map",
+        "path drawer",
+        "transported arrow",
+        "angle difference readout"
+      ],
+      "engine": [
+        "parallel transport approximation",
+        "sphere path geometry",
+        "holonomy estimator"
+      ],
+      "challenges": [
+        "Make zero holonomy path",
+        "Increase enclosed area and observe angle",
+        "Explain curvature from transport"
+      ],
+      "tests": [
+        "small loop small rotation",
+        "equator loop sanity",
+        "deterministic transport"
+      ],
+      "depends": [
+        "E2",
+        "E3"
+      ]
+    },
+    {
+      "id": "E6",
+      "phase": "E",
+      "name": "Curvature-Matter Sandbox",
+      "slug": "curvature-matter-sandbox",
+      "concepts": [
+        "Einstein field equation intuition",
+        "stress-energy",
+        "curvature",
+        "geodesic motion",
+        "source fields"
+      ],
+      "mvp": "Conceptual toy model: draw energy density and see a generated curvature/potential field; particles follow geodesic-like paths.",
+      "ui": [
+        "density painter",
+        "curvature heatmap",
+        "particle launcher",
+        "explanation panel"
+      ],
+      "engine": [
+        "Poisson-like toy solver",
+        "field gradient",
+        "particle stepping"
+      ],
+      "challenges": [
+        "Create lens-like curvature",
+        "Compare high/low density",
+        "Explain why this is not full GR"
+      ],
+      "tests": [
+        "symmetric density gives symmetric field",
+        "field responds monotonically to density",
+        "toy solver stable"
+      ],
+      "depends": [
+        "E3",
+        "E5"
+      ]
+    },
+    {
+      "id": "F1",
+      "phase": "F",
+      "name": "Black Hole Orbit Lab",
+      "slug": "black-hole-orbit-lab",
+      "concepts": [
+        "Schwarzschild black hole",
+        "event horizon",
+        "Schwarzschild radius",
+        "stable and unstable orbits",
+        "photon paths"
+      ],
+      "mvp": "Show orbits around a Schwarzschild black hole with horizon radius and basic orbit classes.",
+      "ui": [
+        "black hole mass slider",
+        "launch controls",
+        "horizon overlay",
+        "orbit classification"
+      ],
+      "engine": [
+        "Schwarzschild radius",
+        "effective potential toy model",
+        "geodesic-inspired stepping"
+      ],
+      "challenges": [
+        "Find stable orbit",
+        "Send photon near photon sphere",
+        "Fall through horizon"
+      ],
+      "tests": [
+        "rs=2GM/c^2",
+        "horizon scales linearly with mass",
+        "classification thresholds deterministic"
+      ],
+      "depends": [
+        "B4",
+        "E3"
+      ]
+    },
+    {
+      "id": "F2",
+      "phase": "F",
+      "name": "Gravity Clock Comparator",
+      "slug": "gravity-clock-comparator",
+      "concepts": [
+        "gravitational time dilation",
+        "redshift",
+        "Schwarzschild radius",
+        "observer at infinity"
+      ],
+      "mvp": "Place clocks at different radii around a black hole and compare tick rates for a far observer.",
+      "ui": [
+        "clock placement",
+        "tick animations",
+        "redshift meter",
+        "radius slider"
+      ],
+      "engine": [
+        "Schwarzschild time dilation factor",
+        "valid radius checks",
+        "redshift estimate"
+      ],
+      "challenges": [
+        "Make lower clock run slower",
+        "Approach horizon and observe factor",
+        "Explain far vs local observer"
+      ],
+      "tests": [
+        "factor approaches 1 far away",
+        "factor decreases near horizon",
+        "invalid radius handled"
+      ],
+      "depends": [
+        "F1",
+        "D4"
+      ]
+    },
+    {
+      "id": "F3",
+      "phase": "F",
+      "name": "Gravitational Lens Renderer",
+      "slug": "gravitational-lens-renderer",
+      "concepts": [
+        "light bending",
+        "null geodesics",
+        "gravitational lensing",
+        "Einstein ring",
+        "black hole shadow"
+      ],
+      "mvp": "Background star field distorted by a central mass using approximate ray deflection.",
+      "ui": [
+        "mass slider",
+        "background image/grid",
+        "ray overlay",
+        "ring indicator"
+      ],
+      "engine": [
+        "weak-field deflection approximation",
+        "ray mapping",
+        "optional Schwarzschild ray tracer later"
+      ],
+      "challenges": [
+        "Create Einstein ring alignment",
+        "Increase lens mass",
+        "Compare ray overlay and rendered distortion"
+      ],
+      "tests": [
+        "deflection increases with mass",
+        "deflection decreases with impact parameter",
+        "zero mass identity mapping"
+      ],
+      "depends": [
+        "F1",
+        "C1"
+      ]
+    },
+    {
+      "id": "F4",
+      "phase": "F",
+      "name": "Accretion Disk Simulator",
+      "slug": "accretion-disk-simulator",
+      "concepts": [
+        "accretion disk",
+        "angular momentum",
+        "viscosity",
+        "heating",
+        "inspiral"
+      ],
+      "mvp": "Particles orbit a black hole; simple viscosity causes inspiral and heating color changes.",
+      "ui": [
+        "particle disk view",
+        "viscosity slider",
+        "temperature color legend",
+        "angular momentum plot"
+      ],
+      "engine": [
+        "particle orbits",
+        "damping/viscosity toy model",
+        "temperature heuristic"
+      ],
+      "challenges": [
+        "Create stable disk",
+        "Increase viscosity and observe inflow",
+        "Explain toy limitations"
+      ],
+      "tests": [
+        "with zero viscosity angular momentum roughly conserved",
+        "viscosity reduces orbital energy",
+        "temperature heuristic bounded"
+      ],
+      "depends": [
+        "F1",
+        "B6"
+      ]
+    },
+    {
+      "id": "F5",
+      "phase": "F",
+      "name": "Frame Dragging Explorer",
+      "slug": "frame-dragging-explorer",
+      "concepts": [
+        "Kerr black hole",
+        "spin",
+        "frame dragging",
+        "ergosphere",
+        "rotating spacetime"
+      ],
+      "mvp": "Conceptual visualization of rotating black hole dragging nearby trajectories as spin changes.",
+      "ui": [
+        "spin slider",
+        "ergosphere overlay",
+        "trajectory field",
+        "advanced notes"
+      ],
+      "engine": [
+        "Kerr parameter toy constraints",
+        "frame-dragging vector field approximation",
+        "ergosphere shape cartoon"
+      ],
+      "challenges": [
+        "Increase spin and observe ergosphere",
+        "Compare prograde/retrograde paths",
+        "Explain why this is a toy model"
+      ],
+      "tests": [
+        "spin range validation",
+        "zero spin reduces to non-rotating view",
+        "ergosphere grows with spin heuristic"
+      ],
+      "depends": [
+        "F1",
+        "E6"
+      ]
+    },
+    {
+      "id": "F6",
+      "phase": "F",
+      "name": "Horizon Thermodynamics Toy Model",
+      "slug": "horizon-thermodynamics-toy-model",
+      "concepts": [
+        "black hole thermodynamics",
+        "horizon area",
+        "entropy",
+        "Hawking radiation",
+        "evaporation"
+      ],
+      "mvp": "Concept panel showing black hole mass, horizon area, temperature, and evaporation-time scale.",
+      "ui": [
+        "mass slider",
+        "area/temperature bars",
+        "evaporation timeline",
+        "toy-model disclaimer"
+      ],
+      "engine": [
+        "area proportionality",
+        "temperature inverse to mass",
+        "evaporation time scaling M^3"
+      ],
+      "challenges": [
+        "Compare stellar vs tiny black hole",
+        "Explain inverse mass-temperature relation",
+        "Estimate scale differences"
+      ],
+      "tests": [
+        "temperature decreases with mass",
+        "area increases with mass squared",
+        "evaporation time increases with mass cubed"
+      ],
+      "depends": [
+        "F1"
+      ]
+    },
+    {
+      "id": "G1",
+      "phase": "G",
+      "name": "Binary Inspiral Simulator",
+      "slug": "binary-inspiral-simulator",
+      "concepts": [
+        "binary systems",
+        "center of mass",
+        "inspiral",
+        "gravitational wave energy loss",
+        "orbital frequency"
+      ],
+      "mvp": "Two compact objects orbit and slowly inspiral under a simplified energy-loss term.",
+      "ui": [
+        "mass controls",
+        "orbit view",
+        "separation/frequency plot",
+        "merge marker"
+      ],
+      "engine": [
+        "two-body orbit",
+        "toy radiation reaction",
+        "frequency estimate"
+      ],
+      "challenges": [
+        "Make chirp faster",
+        "Compare equal vs unequal masses",
+        "Observe separation shrinking"
+      ],
+      "tests": [
+        "center of mass stays fixed without loss",
+        "loss shrinks separation",
+        "frequency increases as separation decreases"
+      ],
+      "depends": [
+        "B6",
+        "F1"
+      ]
+    },
+    {
+      "id": "G2",
+      "phase": "G",
+      "name": "Gravitational Wave Chirp Lab",
+      "slug": "gravitational-wave-chirp-lab",
+      "concepts": [
+        "gravitational wave",
+        "chirp",
+        "waveform",
+        "frequency sweep",
+        "compact-object merger"
+      ],
+      "mvp": "Generate a simplified chirp waveform from masses and play/plot the signal.",
+      "ui": [
+        "mass sliders",
+        "waveform plot",
+        "audio playback",
+        "spectrogram option"
+      ],
+      "engine": [
+        "toy chirp generator",
+        "normalization",
+        "audio buffer creation"
+      ],
+      "challenges": [
+        "Hear frequency increase",
+        "Compare heavier/lighter binaries",
+        "Match chirp to inspiral view"
+      ],
+      "tests": [
+        "waveform finite",
+        "frequency increases over time",
+        "normalization bounds output"
+      ],
+      "depends": [
+        "G1",
+        "C2"
+      ]
+    },
+    {
+      "id": "G3",
+      "phase": "G",
+      "name": "LIGO Signal Hunter",
+      "slug": "ligo-signal-hunter",
+      "concepts": [
+        "detection",
+        "noise",
+        "matched filtering",
+        "correlation",
+        "signal-to-noise ratio"
+      ],
+      "mvp": "Hide a chirp in noisy data; users choose templates and find correlation peaks.",
+      "ui": [
+        "noisy signal plot",
+        "template selector",
+        "correlation graph",
+        "detection score"
+      ],
+      "engine": [
+        "noise generator",
+        "template bank",
+        "cross-correlation",
+        "SNR heuristic"
+      ],
+      "challenges": [
+        "Detect hidden chirp",
+        "Choose best template",
+        "Reduce false positives"
+      ],
+      "tests": [
+        "correlation peak at injected signal",
+        "wrong template lower score",
+        "noise seeded reproducibly"
+      ],
+      "depends": [
+        "G2"
+      ]
+    },
+    {
+      "id": "H1",
+      "phase": "H",
+      "name": "Galaxy Distribution Viewer",
+      "slug": "galaxy-distribution-viewer",
+      "concepts": [
+        "cosmological principle",
+        "homogeneity",
+        "isotropy",
+        "large-scale structure",
+        "averaging"
+      ],
+      "mvp": "Random/clustered galaxy field that appears structured locally and smoother when averaged over larger scales.",
+      "ui": [
+        "zoom control",
+        "averaging window",
+        "galaxy map",
+        "statistics panel"
+      ],
+      "engine": [
+        "random distributions",
+        "cluster generation",
+        "density averaging"
+      ],
+      "challenges": [
+        "Find scale where distribution looks homogeneous",
+        "Compare isotropic vs anisotropic",
+        "Explain averaging"
+      ],
+      "tests": [
+        "density average converges for random distribution",
+        "cluster settings change variance",
+        "seed reproducibility"
+      ],
+      "depends": [
+        "A1"
+      ]
+    },
+    {
+      "id": "H2",
+      "phase": "H",
+      "name": "Expanding Grid Universe",
+      "slug": "expanding-grid-universe",
+      "concepts": [
+        "scale factor",
+        "expanding space",
+        "comoving coordinates",
+        "proper distance",
+        "Hubble flow"
+      ],
+      "mvp": "Grid expands with scale factor a(t), showing galaxies fixed in comoving coordinates while proper distances grow.",
+      "ui": [
+        "scale-factor slider",
+        "grid animation",
+        "comoving/proper readout",
+        "galaxy markers"
+      ],
+      "engine": [
+        "comoving to proper conversion",
+        "simple a(t) presets",
+        "distance tracking"
+      ],
+      "challenges": [
+        "Double scale factor",
+        "Explain why galaxies are not flying through local space",
+        "Compare nearby/far distances"
+      ],
+      "tests": [
+        "proper distance = a * comoving",
+        "comoving coordinates unchanged",
+        "distance ratios scale correctly"
+      ],
+      "depends": [
+        "H1"
+      ]
+    },
+    {
+      "id": "H3",
+      "phase": "H",
+      "name": "Universe Equation Solver",
+      "slug": "universe-equation-solver",
+      "concepts": [
+        "Friedmann equation",
+        "matter",
+        "radiation",
+        "dark energy",
+        "curvature",
+        "cosmic fate"
+      ],
+      "mvp": "Solve simplified Friedmann equation for a(t) from Ω parameters and plot past/future expansion.",
+      "ui": [
+        "Ω sliders",
+        "a(t) plot",
+        "fate label",
+        "component density chart"
+      ],
+      "engine": [
+        "Friedmann RHS",
+        "ODE integration",
+        "parameter normalization/checks"
+      ],
+      "challenges": [
+        "Make accelerating universe",
+        "Make recollapsing toy universe",
+        "Compare matter vs radiation dominated"
+      ],
+      "tests": [
+        "flat parameter sum check",
+        "known simple cases monotonic",
+        "invalid negative density handled"
+      ],
+      "depends": [
+        "H2",
+        "A4"
+      ]
+    },
+    {
+      "id": "H4",
+      "phase": "H",
+      "name": "Cosmic Redshift Calculator",
+      "slug": "cosmic-redshift-calculator",
+      "concepts": [
+        "cosmological redshift",
+        "lookback time",
+        "comoving distance",
+        "scale factor",
+        "distance ladder"
+      ],
+      "mvp": "Input redshift z; output scale factor, approximate lookback time, and distance from selected cosmology.",
+      "ui": [
+        "z input",
+        "distance cards",
+        "timeline marker",
+        "spectrum redshift preview"
+      ],
+      "engine": [
+        "a=1/(1+z)",
+        "numerical integral hooks",
+        "approx cosmology presets"
+      ],
+      "challenges": [
+        "Find scale factor at z=1",
+        "Compare redshift and lookback time",
+        "Shift a spectral line"
+      ],
+      "tests": [
+        "z=0 gives a=1",
+        "a formula exact",
+        "distance monotonic with z"
+      ],
+      "depends": [
+        "H3",
+        "C3"
+      ]
+    },
+    {
+      "id": "H5",
+      "phase": "H",
+      "name": "CMB Pixel Universe",
+      "slug": "cmb-pixel-universe",
+      "concepts": [
+        "cosmic microwave background",
+        "temperature fluctuations",
+        "early universe",
+        "power spectrum",
+        "recombination"
+      ],
+      "mvp": "Generate a sphere/2D map of small temperature fluctuations with adjustable large/small scale power.",
+      "ui": [
+        "CMB map",
+        "power sliders",
+        "histogram",
+        "scale explanation"
+      ],
+      "engine": [
+        "seeded noise",
+        "frequency-domain filtering",
+        "temperature perturbation scaling"
+      ],
+      "challenges": [
+        "Increase large-scale structure",
+        "Suppress small scales",
+        "Explain fluctuation amplitude"
+      ],
+      "tests": [
+        "seed reproducible",
+        "mean near baseline",
+        "power sliders affect variance by band"
+      ],
+      "depends": [
+        "C2",
+        "H3"
+      ]
+    },
+    {
+      "id": "H6",
+      "phase": "H",
+      "name": "Galaxy Rotation Curve Lab",
+      "slug": "galaxy-rotation-curve-lab",
+      "concepts": [
+        "dark matter",
+        "galaxy rotation curves",
+        "mass profiles",
+        "halo",
+        "orbital velocity"
+      ],
+      "mvp": "Compute rotation curves from visible matter alone and with a dark-matter halo.",
+      "ui": [
+        "mass profile controls",
+        "rotation curve plot",
+        "halo toggle",
+        "galaxy diagram"
+      ],
+      "engine": [
+        "v=sqrt(GM(r)/r)",
+        "disk/bulge toy profile",
+        "halo profile toy model"
+      ],
+      "challenges": [
+        "Flatten the rotation curve",
+        "Compare no halo vs halo",
+        "Infer hidden mass"
+      ],
+      "tests": [
+        "velocity increases with enclosed mass",
+        "halo can flatten curve",
+        "no divide-by-zero at r=0"
+      ],
+      "depends": [
+        "B4",
+        "H1"
+      ]
+    },
+    {
+      "id": "H7",
+      "phase": "H",
+      "name": "Dark Energy Slider",
+      "slug": "dark-energy-slider",
+      "concepts": [
+        "dark energy",
+        "cosmological constant",
+        "accelerating expansion",
+        "future universe",
+        "density parameters"
+      ],
+      "mvp": "Adjust ΩΛ and observe future scale-factor acceleration/deceleration.",
+      "ui": [
+        "ΩΛ slider",
+        "future a(t) plot",
+        "acceleration indicator",
+        "comparison presets"
+      ],
+      "engine": [
+        "Friedmann solver reuse",
+        "acceleration heuristic",
+        "scenario comparison"
+      ],
+      "challenges": [
+        "Make expansion accelerate",
+        "Reduce dark energy",
+        "Compare present and far future"
+      ],
+      "tests": [
+        "higher ΩΛ increases late-time expansion rate",
+        "solver stable for valid params",
+        "presets load correctly"
+      ],
+      "depends": [
+        "H3"
+      ]
+    },
+    {
+      "id": "H8",
+      "phase": "H",
+      "name": "Cosmic Timeline Builder",
+      "slug": "cosmic-timeline-builder",
+      "concepts": [
+        "cosmic history",
+        "inflation",
+        "nucleosynthesis",
+        "CMB",
+        "galaxy formation",
+        "stellar eras"
+      ],
+      "mvp": "Interactive logarithmic timeline from early universe to today with cards and linked mini simulations.",
+      "ui": [
+        "log timeline",
+        "event cards",
+        "temperature/scale annotations",
+        "links to apps"
+      ],
+      "engine": [
+        "timeline data",
+        "log time mapping",
+        "cross-link registry"
+      ],
+      "challenges": [
+        "Order key events",
+        "Find CMB epoch",
+        "Connect cosmic phases to apps"
+      ],
+      "tests": [
+        "timeline order valid",
+        "log mapping monotonic",
+        "event links resolve"
+      ],
+      "depends": [
+        "H3",
+        "H4",
+        "H5"
+      ]
+    },
+    {
+      "id": "I1",
+      "phase": "I",
+      "name": "Wormhole Taxonomy Explorer",
+      "slug": "wormhole-taxonomy-explorer",
+      "concepts": [
+        "Einstein-Rosen bridge",
+        "traversable wormhole",
+        "Morris-Thorne wormhole",
+        "shortcut geometry",
+        "stability"
+      ],
+      "mvp": "Compare three wormhole-like concepts and label traversability, stability, and exotic-matter requirements.",
+      "ui": [
+        "mode selector",
+        "comparison cards",
+        "embedding sketch",
+        "caveat panel"
+      ],
+      "engine": [
+        "taxonomy data model",
+        "concept flags",
+        "diagram presets"
+      ],
+      "challenges": [
+        "Classify a wormhole scenario",
+        "Explain traversable vs non-traversable",
+        "Identify missing physics"
+      ],
+      "tests": [
+        "taxonomy flags consistent",
+        "cards render all caveats",
+        "mode switching deterministic"
+      ],
+      "depends": [
+        "F1",
+        "E3"
+      ]
+    },
+    {
+      "id": "I2",
+      "phase": "I",
+      "name": "Wormhole Metric Builder",
+      "slug": "wormhole-metric-builder",
+      "concepts": [
+        "Morris-Thorne metric",
+        "throat",
+        "redshift function",
+        "shape function",
+        "flare-out condition"
+      ],
+      "mvp": "Choose shape/redshift functions and visualize throat geometry plus basic validity checks.",
+      "ui": [
+        "function selector",
+        "parameter sliders",
+        "embedding plot",
+        "condition checker"
+      ],
+      "engine": [
+        "shape function b(r)",
+        "redshift function Phi(r)",
+        "throat solver",
+        "flare-out heuristic"
+      ],
+      "challenges": [
+        "Create a valid throat",
+        "Avoid horizon-like redshift",
+        "Explain shape function"
+      ],
+      "tests": [
+        "throat detection",
+        "flare-out condition sign",
+        "invalid functions handled"
+      ],
+      "depends": [
+        "I1",
+        "E3"
+      ]
+    },
+    {
+      "id": "I3",
+      "phase": "I",
+      "name": "Embedding Diagram Renderer",
+      "slug": "embedding-diagram-renderer",
+      "concepts": [
+        "embedding diagram",
+        "spatial slice",
+        "wormhole throat",
+        "curved geometry",
+        "visual analogy"
+      ],
+      "mvp": "Three.js surface rendering of a wormhole spatial slice with adjustable throat radius.",
+      "ui": [
+        "3D surface",
+        "throat radius slider",
+        "wireframe toggle",
+        "camera controls"
+      ],
+      "engine": [
+        "mesh generation",
+        "embedding function sampler",
+        "domain validation"
+      ],
+      "challenges": [
+        "Increase throat radius",
+        "Compare shallow/deep throat",
+        "Explain what embedding hides"
+      ],
+      "tests": [
+        "mesh finite",
+        "symmetry about throat",
+        "parameter changes regenerate mesh"
+      ],
+      "depends": [
+        "I2"
+      ]
+    },
+    {
+      "id": "I4",
+      "phase": "I",
+      "name": "Energy Condition Checker",
+      "slug": "energy-condition-checker",
+      "concepts": [
+        "null energy condition",
+        "weak energy condition",
+        "stress-energy",
+        "exotic matter",
+        "wormhole constraints"
+      ],
+      "mvp": "Compute simplified energy-condition flags for selected wormhole toy functions.",
+      "ui": [
+        "metric/function selector",
+        "NEC/WEC status cards",
+        "radial plot",
+        "interpretation panel"
+      ],
+      "engine": [
+        "toy stress-energy expressions",
+        "NEC evaluator",
+        "WEC evaluator",
+        "sampling over radius"
+      ],
+      "challenges": [
+        "Find NEC violation",
+        "Compare functions",
+        "Explain exotic matter caveat"
+      ],
+      "tests": [
+        "known toy function violates expected condition",
+        "sampler handles singular points",
+        "status aggregation correct"
+      ],
+      "depends": [
+        "I2"
+      ]
+    },
+    {
+      "id": "I5",
+      "phase": "I",
+      "name": "Traversability Stress Test",
+      "slug": "traversability-stress-test",
+      "concepts": [
+        "tidal forces",
+        "traveler constraints",
+        "proper acceleration",
+        "wormhole traversal",
+        "human-scale limits"
+      ],
+      "mvp": "Simulate a traveler path through a wormhole and flag excessive tidal acceleration in a toy model.",
+      "ui": [
+        "traveler path",
+        "speed slider",
+        "tidal stress meter",
+        "safe/unsafe banner"
+      ],
+      "engine": [
+        "tidal acceleration heuristic",
+        "path sampler",
+        "threshold checker"
+      ],
+      "challenges": [
+        "Find safe traversal parameters",
+        "Increase throat size",
+        "Explain why tidal forces matter"
+      ],
+      "tests": [
+        "stress decreases with larger throat heuristic",
+        "threshold comparison correct",
+        "path sampling finite"
+      ],
+      "depends": [
+        "I2",
+        "B7"
+      ]
+    },
+    {
+      "id": "I6",
+      "phase": "I",
+      "name": "Wormhole Time Machine Lab",
+      "slug": "wormhole-time-machine-lab",
+      "concepts": [
+        "wormhole mouths",
+        "time shift",
+        "time dilation",
+        "closed timelike curves",
+        "causality violation"
+      ],
+      "mvp": "Two wormhole mouths; one is moved relativistically to create time offset. App checks whether a signal loop returns to its own past.",
+      "ui": [
+        "two-mouth diagram",
+        "mouth travel controls",
+        "signal route editor",
+        "CTC warning"
+      ],
+      "engine": [
+        "time dilation from Lorentz gamma",
+        "wormhole mouth time offset",
+        "causal loop detector",
+        "route timing"
+      ],
+      "challenges": [
+        "Create time offset",
+        "Find a closed causal loop",
+        "Avoid CTC with parameter constraints"
+      ],
+      "tests": [
+        "time dilation offset grows with speed/duration",
+        "loop detection identifies past return",
+        "no loop for zero offset"
+      ],
+      "depends": [
+        "D4",
+        "I2",
+        "I7"
+      ]
+    },
+    {
+      "id": "I7",
+      "phase": "I",
+      "name": "Causality Loop Detector",
+      "slug": "causality-loop-detector",
+      "concepts": [
+        "causal graph",
+        "events",
+        "directed cycles",
+        "closed timelike curves",
+        "partial order"
+      ],
+      "mvp": "Users create events and causal links; app detects cycles and labels causality violations.",
+      "ui": [
+        "event graph editor",
+        "edge type selector",
+        "cycle highlight",
+        "explanation log"
+      ],
+      "engine": [
+        "directed graph",
+        "cycle detection",
+        "time-order validator",
+        "reachability"
+      ],
+      "challenges": [
+        "Build an acyclic causal history",
+        "Create a paradoxical loop",
+        "Repair the graph"
+      ],
+      "tests": [
+        "DAG no cycle",
+        "simple cycle found",
+        "self-loop found",
+        "cycle highlighting returns path"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "I8",
+      "phase": "I",
+      "name": "Paradox Simulator",
+      "slug": "paradox-simulator",
+      "concepts": [
+        "grandfather paradox",
+        "self-consistency",
+        "constraints",
+        "SAT/CSP",
+        "many-worlds as interpretation"
+      ],
+      "mvp": "Model causal rules as Boolean constraints and check whether any self-consistent history exists.",
+      "ui": [
+        "rule builder",
+        "event truth table",
+        "solver result",
+        "scenario templates"
+      ],
+      "engine": [
+        "Boolean constraint representation",
+        "brute-force SAT for small N",
+        "conflict explainer"
+      ],
+      "challenges": [
+        "Create inconsistent history",
+        "Repair it",
+        "Find a self-consistent loop"
+      ],
+      "tests": [
+        "known satisfiable scenario",
+        "known unsatisfiable scenario",
+        "solver enumerates assignments"
+      ],
+      "depends": [
+        "I7"
+      ]
+    },
+    {
+      "id": "I9",
+      "phase": "I",
+      "name": "Chronology Protection Toy Model",
+      "slug": "chronology-protection-toy-model",
+      "concepts": [
+        "chronology protection",
+        "vacuum fluctuations",
+        "semiclassical gravity",
+        "CTC formation",
+        "physical instability"
+      ],
+      "mvp": "Conceptual graph: as CTC threshold approaches, toy field energy diverges or grows sharply.",
+      "ui": [
+        "threshold slider",
+        "energy growth plot",
+        "CTC boundary",
+        "caveat panel"
+      ],
+      "engine": [
+        "toy divergence function",
+        "stability flag",
+        "parameter clamps"
+      ],
+      "challenges": [
+        "Approach threshold",
+        "Explain why this is not proof",
+        "Compare stable/unstable settings"
+      ],
+      "tests": [
+        "energy grows near threshold",
+        "no NaN before clamp",
+        "caveat always visible"
+      ],
+      "depends": [
+        "I6",
+        "I7"
+      ]
+    },
+    {
+      "id": "I10",
+      "phase": "I",
+      "name": "Negative Energy Sandbox",
+      "slug": "negative-energy-sandbox",
+      "concepts": [
+        "negative energy",
+        "Casimir-like toy model",
+        "quantum field effects",
+        "semiclassical limitations",
+        "exotic matter"
+      ],
+      "mvp": "Toy Casimir-style panel: plate separation changes a conceptual negative energy density plot; explicitly labels limitations.",
+      "ui": [
+        "plate separation slider",
+        "energy density plot",
+        "scale warning",
+        "wormhole requirement comparison"
+      ],
+      "engine": [
+        "toy inverse-fourth scaling",
+        "unit-scale notes",
+        "safety/caveat text"
+      ],
+      "challenges": [
+        "Decrease separation and observe energy magnitude",
+        "Explain why microscopic effects don't imply macroscopic wormholes",
+        "Connect to NEC checker"
+      ],
+      "tests": [
+        "magnitude increases as separation decreases",
+        "invalid separation rejected",
+        "limitation text rendered"
+      ],
+      "depends": [
+        "I4"
+      ]
+    }
+  ],
+  "standard_app_sections": [
+    "VisualizationPanel",
+    "ControlPanel",
+    "EquationPanel",
+    "InvariantPanel",
+    "ChallengePanel"
+  ],
+  "recommended_stack": [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Vitest",
+    "Canvas/SVG",
+    "Three.js optional"
+  ]
+}

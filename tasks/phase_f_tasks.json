@@ -1,0 +1,239 @@
+{
+  "phase": "F",
+  "title": "黑洞与强引力",
+  "goal": "Use metrics, horizons, and geodesic intuition to model black holes.",
+  "apps": [
+    {
+      "id": "F1",
+      "phase": "F",
+      "name": "Black Hole Orbit Lab",
+      "slug": "black-hole-orbit-lab",
+      "concepts": [
+        "Schwarzschild black hole",
+        "event horizon",
+        "Schwarzschild radius",
+        "stable and unstable orbits",
+        "photon paths"
+      ],
+      "mvp": "Show orbits around a Schwarzschild black hole with horizon radius and basic orbit classes.",
+      "ui": [
+        "black hole mass slider",
+        "launch controls",
+        "horizon overlay",
+        "orbit classification"
+      ],
+      "engine": [
+        "Schwarzschild radius",
+        "effective potential toy model",
+        "geodesic-inspired stepping"
+      ],
+      "challenges": [
+        "Find stable orbit",
+        "Send photon near photon sphere",
+        "Fall through horizon"
+      ],
+      "tests": [
+        "rs=2GM/c^2",
+        "horizon scales linearly with mass",
+        "classification thresholds deterministic"
+      ],
+      "depends": [
+        "B4",
+        "E3"
+      ]
+    },
+    {
+      "id": "F2",
+      "phase": "F",
+      "name": "Gravity Clock Comparator",
+      "slug": "gravity-clock-comparator",
+      "concepts": [
+        "gravitational time dilation",
+        "redshift",
+        "Schwarzschild radius",
+        "observer at infinity"
+      ],
+      "mvp": "Place clocks at different radii around a black hole and compare tick rates for a far observer.",
+      "ui": [
+        "clock placement",
+        "tick animations",
+        "redshift meter",
+        "radius slider"
+      ],
+      "engine": [
+        "Schwarzschild time dilation factor",
+        "valid radius checks",
+        "redshift estimate"
+      ],
+      "challenges": [
+        "Make lower clock run slower",
+        "Approach horizon and observe factor",
+        "Explain far vs local observer"
+      ],
+      "tests": [
+        "factor approaches 1 far away",
+        "factor decreases near horizon",
+        "invalid radius handled"
+      ],
+      "depends": [
+        "F1",
+        "D4"
+      ]
+    },
+    {
+      "id": "F3",
+      "phase": "F",
+      "name": "Gravitational Lens Renderer",
+      "slug": "gravitational-lens-renderer",
+      "concepts": [
+        "light bending",
+        "null geodesics",
+        "gravitational lensing",
+        "Einstein ring",
+        "black hole shadow"
+      ],
+      "mvp": "Background star field distorted by a central mass using approximate ray deflection.",
+      "ui": [
+        "mass slider",
+        "background image/grid",
+        "ray overlay",
+        "ring indicator"
+      ],
+      "engine": [
+        "weak-field deflection approximation",
+        "ray mapping",
+        "optional Schwarzschild ray tracer later"
+      ],
+      "challenges": [
+        "Create Einstein ring alignment",
+        "Increase lens mass",
+        "Compare ray overlay and rendered distortion"
+      ],
+      "tests": [
+        "deflection increases with mass",
+        "deflection decreases with impact parameter",
+        "zero mass identity mapping"
+      ],
+      "depends": [
+        "F1",
+        "C1"
+      ]
+    },
+    {
+      "id": "F4",
+      "phase": "F",
+      "name": "Accretion Disk Simulator",
+      "slug": "accretion-disk-simulator",
+      "concepts": [
+        "accretion disk",
+        "angular momentum",
+        "viscosity",
+        "heating",
+        "inspiral"
+      ],
+      "mvp": "Particles orbit a black hole; simple viscosity causes inspiral and heating color changes.",
+      "ui": [
+        "particle disk view",
+        "viscosity slider",
+        "temperature color legend",
+        "angular momentum plot"
+      ],
+      "engine": [
+        "particle orbits",
+        "damping/viscosity toy model",
+        "temperature heuristic"
+      ],
+      "challenges": [
+        "Create stable disk",
+        "Increase viscosity and observe inflow",
+        "Explain toy limitations"
+      ],
+      "tests": [
+        "with zero viscosity angular momentum roughly conserved",
+        "viscosity reduces orbital energy",
+        "temperature heuristic bounded"
+      ],
+      "depends": [
+        "F1",
+        "B6"
+      ]
+    },
+    {
+      "id": "F5",
+      "phase": "F",
+      "name": "Frame Dragging Explorer",
+      "slug": "frame-dragging-explorer",
+      "concepts": [
+        "Kerr black hole",
+        "spin",
+        "frame dragging",
+        "ergosphere",
+        "rotating spacetime"
+      ],
+      "mvp": "Conceptual visualization of rotating black hole dragging nearby trajectories as spin changes.",
+      "ui": [
+        "spin slider",
+        "ergosphere overlay",
+        "trajectory field",
+        "advanced notes"
+      ],
+      "engine": [
+        "Kerr parameter toy constraints",
+        "frame-dragging vector field approximation",
+        "ergosphere shape cartoon"
+      ],
+      "challenges": [
+        "Increase spin and observe ergosphere",
+        "Compare prograde/retrograde paths",
+        "Explain why this is a toy model"
+      ],
+      "tests": [
+        "spin range validation",
+        "zero spin reduces to non-rotating view",
+        "ergosphere grows with spin heuristic"
+      ],
+      "depends": [
+        "F1",
+        "E6"
+      ]
+    },
+    {
+      "id": "F6",
+      "phase": "F",
+      "name": "Horizon Thermodynamics Toy Model",
+      "slug": "horizon-thermodynamics-toy-model",
+      "concepts": [
+        "black hole thermodynamics",
+        "horizon area",
+        "entropy",
+        "Hawking radiation",
+        "evaporation"
+      ],
+      "mvp": "Concept panel showing black hole mass, horizon area, temperature, and evaporation-time scale.",
+      "ui": [
+        "mass slider",
+        "area/temperature bars",
+        "evaporation timeline",
+        "toy-model disclaimer"
+      ],
+      "engine": [
+        "area proportionality",
+        "temperature inverse to mass",
+        "evaporation time scaling M^3"
+      ],
+      "challenges": [
+        "Compare stellar vs tiny black hole",
+        "Explain inverse mass-temperature relation",
+        "Estimate scale differences"
+      ],
+      "tests": [
+        "temperature decreases with mass",
+        "area increases with mass squared",
+        "evaporation time increases with mass cubed"
+      ],
+      "depends": [
+        "F1"
+      ]
+    }
+  ]
+}

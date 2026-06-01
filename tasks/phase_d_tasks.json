@@ -1,0 +1,194 @@
+{
+  "phase": "D",
+  "title": "狭义相对论",
+  "goal": "Understand spacetime, time dilation, proper time, and causal structure in flat spacetime.",
+  "apps": [
+    {
+      "id": "D1",
+      "phase": "D",
+      "name": "Light Clock Simulator",
+      "slug": "light-clock-simulator",
+      "concepts": [
+        "constancy of light speed",
+        "time dilation",
+        "inertial frames",
+        "light clock"
+      ],
+      "mvp": "Compare a stationary light clock and moving light clock with path-length geometry.",
+      "ui": [
+        "speed slider",
+        "two observer views",
+        "gamma readout",
+        "light path trace"
+      ],
+      "engine": [
+        "Lorentz gamma",
+        "light clock geometry",
+        "units with c=1 option"
+      ],
+      "challenges": [
+        "Find speed for gamma=2",
+        "Explain longer light path",
+        "Compare proper and coordinate time"
+      ],
+      "tests": [
+        "gamma(0)=1",
+        "gamma increases with v",
+        "reject v>=c"
+      ],
+      "depends": [
+        "C1"
+      ]
+    },
+    {
+      "id": "D2",
+      "phase": "D",
+      "name": "Lorentz Transformer",
+      "slug": "lorentz-transformer",
+      "concepts": [
+        "Lorentz transformation",
+        "space-time mixing",
+        "simultaneity",
+        "inertial frames"
+      ],
+      "mvp": "Input events and velocity; display transformed coordinates and tilted spacetime grid.",
+      "ui": [
+        "event table",
+        "velocity slider",
+        "Minkowski grid",
+        "coordinate readout"
+      ],
+      "engine": [
+        "lorentzTransform1D",
+        "inverse transform",
+        "interval checker"
+      ],
+      "challenges": [
+        "Make two events simultaneous in one frame",
+        "Verify inverse transform",
+        "Preserve spacetime interval"
+      ],
+      "tests": [
+        "interval invariant",
+        "inverse recovers original",
+        "low-speed limit approx identity"
+      ],
+      "depends": [
+        "D1"
+      ]
+    },
+    {
+      "id": "D3",
+      "phase": "D",
+      "name": "Spacetime Diagram Editor",
+      "slug": "spacetime-diagram-editor",
+      "concepts": [
+        "worldlines",
+        "light cones",
+        "timelike/spacelike/lightlike intervals",
+        "causality"
+      ],
+      "mvp": "Users draw events and worldlines; app classifies intervals and causal reachability.",
+      "ui": [
+        "event editor",
+        "light-cone overlay",
+        "worldline drawing",
+        "interval classifier"
+      ],
+      "engine": [
+        "minkowskiInterval",
+        "interval classifier",
+        "causal reachability"
+      ],
+      "challenges": [
+        "Connect two timelike events",
+        "Find spacelike separated pair",
+        "Draw physically possible worldline"
+      ],
+      "tests": [
+        "classification thresholds",
+        "light cone boundary",
+        "worldline speed constraint"
+      ],
+      "depends": [
+        "D2"
+      ]
+    },
+    {
+      "id": "D4",
+      "phase": "D",
+      "name": "Proper Time Race",
+      "slug": "proper-time-race",
+      "concepts": [
+        "proper time",
+        "twin paradox",
+        "worldline length",
+        "accelerated turnaround"
+      ],
+      "mvp": "Two travelers follow different worldlines and reunite; app computes elapsed proper time.",
+      "ui": [
+        "worldline editor",
+        "proper-time counters",
+        "traveler avatars",
+        "speed warnings"
+      ],
+      "engine": [
+        "piecewise worldline integration",
+        "proper time integral",
+        "speed validator"
+      ],
+      "challenges": [
+        "Make traveler age less",
+        "Compare straight vs kinked worldline",
+        "Avoid superluminal segments"
+      ],
+      "tests": [
+        "straight inertial path maximizes proper time between timelike events",
+        "zero velocity proper=time",
+        "invalid paths rejected"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "D5",
+      "phase": "D",
+      "name": "Relativistic Rocket Lab",
+      "slug": "relativistic-rocket-lab",
+      "concepts": [
+        "relativistic energy",
+        "momentum",
+        "velocity limit",
+        "rocket acceleration",
+        "rapidity"
+      ],
+      "mvp": "Continuous acceleration model showing speed approaching but not exceeding light speed.",
+      "ui": [
+        "thrust slider",
+        "velocity/gamma plot",
+        "energy meter",
+        "mission clock"
+      ],
+      "engine": [
+        "relativistic velocity update",
+        "gamma",
+        "energy-momentum relation"
+      ],
+      "challenges": [
+        "Reach 0.9c",
+        "Estimate energy cost",
+        "Compare proper and coordinate acceleration toy models"
+      ],
+      "tests": [
+        "velocity remains below c",
+        "energy increases with gamma",
+        "low-speed kinetic energy approximation"
+      ],
+      "depends": [
+        "D1",
+        "D2"
+      ]
+    }
+  ]
+}

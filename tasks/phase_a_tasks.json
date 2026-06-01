@@ -1,0 +1,160 @@
+{
+  "phase": "A",
+  "title": "数学与模拟基本功",
+  "goal": "Build the numerical and visualization primitives used everywhere else.",
+  "apps": [
+    {
+      "id": "A1",
+      "phase": "A",
+      "name": "Cosmic Scale Explorer",
+      "slug": "cosmic-scale-explorer",
+      "concepts": [
+        "SI units",
+        "astronomical units",
+        "light-year",
+        "parsec",
+        "orders of magnitude"
+      ],
+      "mvp": "Log-scale explorer from atomic scale to observable-universe scale with unit conversions.",
+      "ui": [
+        "log-scale slider",
+        "object cards",
+        "unit conversion panel",
+        "scale ruler"
+      ],
+      "engine": [
+        "unit conversion functions",
+        "log10 scale mapping",
+        "reference object data"
+      ],
+      "challenges": [
+        "Find the scale gap between Earth and Sun",
+        "Convert 1 parsec to light-years",
+        "Place AU, ly, pc on the scale"
+      ],
+      "tests": [
+        "unit conversions are reversible within tolerance",
+        "log slider maps monotonically",
+        "known constants match expected significant figures"
+      ],
+      "depends": []
+    },
+    {
+      "id": "A2",
+      "phase": "A",
+      "name": "Vector Field Playground",
+      "slug": "vector-field-playground",
+      "concepts": [
+        "vectors",
+        "position",
+        "velocity",
+        "acceleration",
+        "Cartesian and polar coordinates"
+      ],
+      "mvp": "A 2D canvas where users drag a particle and see position/velocity/acceleration vectors and coordinate transforms.",
+      "ui": [
+        "draggable particle",
+        "vector arrows",
+        "coordinate system toggle",
+        "numeric readout"
+      ],
+      "engine": [
+        "Vec2 type",
+        "cartesianToPolar",
+        "polarToCartesian",
+        "finite-difference velocity estimate"
+      ],
+      "challenges": [
+        "Make velocity perpendicular to position",
+        "Match a requested polar coordinate",
+        "Create circular motion"
+      ],
+      "tests": [
+        "coordinate transforms round-trip",
+        "vector norms and dot products are correct",
+        "angle normalization works"
+      ],
+      "depends": [
+        "A1"
+      ]
+    },
+    {
+      "id": "A3",
+      "phase": "A",
+      "name": "Slope Field Lab",
+      "slug": "slope-field-lab",
+      "concepts": [
+        "derivatives",
+        "integrals",
+        "ODEs",
+        "slope fields",
+        "phase portraits"
+      ],
+      "mvp": "Plot dx/dt=f(x,t) and integrate trajectories from clicked initial conditions.",
+      "ui": [
+        "formula selector",
+        "slope field canvas",
+        "click-to-seed trajectories",
+        "time-step control"
+      ],
+      "engine": [
+        "Euler integrator",
+        "RK4 integrator",
+        "ODE function registry"
+      ],
+      "challenges": [
+        "Find a stable fixed point",
+        "Compare Euler vs RK4",
+        "Predict long-term behavior before running"
+      ],
+      "tests": [
+        "RK4 solves dx/dt=x approximately",
+        "Euler error decreases with smaller dt",
+        "trajectory array has deterministic output"
+      ],
+      "depends": [
+        "A2"
+      ]
+    },
+    {
+      "id": "A4",
+      "phase": "A",
+      "name": "Integrator Battle Arena",
+      "slug": "integrator-battle-arena",
+      "concepts": [
+        "numerical integration",
+        "Euler",
+        "RK4",
+        "Velocity Verlet",
+        "stability",
+        "energy drift"
+      ],
+      "mvp": "Run the same orbit or harmonic oscillator with several integrators and plot energy error over time.",
+      "ui": [
+        "integrator toggles",
+        "trajectory view",
+        "energy error plot",
+        "dt slider"
+      ],
+      "engine": [
+        "Euler",
+        "RK4",
+        "Velocity Verlet",
+        "energy computation"
+      ],
+      "challenges": [
+        "Make Euler fail visibly",
+        "Find dt where RK4 is stable",
+        "Show why symplectic methods help orbital simulations"
+      ],
+      "tests": [
+        "harmonic oscillator energy error behavior",
+        "Verlet time reversibility sanity check",
+        "integrators do not mutate inputs"
+      ],
+      "depends": [
+        "A3"
+      ]
+    }
+  ]
+}

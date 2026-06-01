@@ -1,0 +1,124 @@
+{
+  "phase": "G",
+  "title": "引力波与双星系统",
+  "goal": "Connect compact-object dynamics to observable spacetime waves.",
+  "apps": [
+    {
+      "id": "G1",
+      "phase": "G",
+      "name": "Binary Inspiral Simulator",
+      "slug": "binary-inspiral-simulator",
+      "concepts": [
+        "binary systems",
+        "center of mass",
+        "inspiral",
+        "gravitational wave energy loss",
+        "orbital frequency"
+      ],
+      "mvp": "Two compact objects orbit and slowly inspiral under a simplified energy-loss term.",
+      "ui": [
+        "mass controls",
+        "orbit view",
+        "separation/frequency plot",
+        "merge marker"
+      ],
+      "engine": [
+        "two-body orbit",
+        "toy radiation reaction",
+        "frequency estimate"
+      ],
+      "challenges": [
+        "Make chirp faster",
+        "Compare equal vs unequal masses",
+        "Observe separation shrinking"
+      ],
+      "tests": [
+        "center of mass stays fixed without loss",
+        "loss shrinks separation",
+        "frequency increases as separation decreases"
+      ],
+      "depends": [
+        "B6",
+        "F1"
+      ]
+    },
+    {
+      "id": "G2",
+      "phase": "G",
+      "name": "Gravitational Wave Chirp Lab",
+      "slug": "gravitational-wave-chirp-lab",
+      "concepts": [
+        "gravitational wave",
+        "chirp",
+        "waveform",
+        "frequency sweep",
+        "compact-object merger"
+      ],
+      "mvp": "Generate a simplified chirp waveform from masses and play/plot the signal.",
+      "ui": [
+        "mass sliders",
+        "waveform plot",
+        "audio playback",
+        "spectrogram option"
+      ],
+      "engine": [
+        "toy chirp generator",
+        "normalization",
+        "audio buffer creation"
+      ],
+      "challenges": [
+        "Hear frequency increase",
+        "Compare heavier/lighter binaries",
+        "Match chirp to inspiral view"
+      ],
+      "tests": [
+        "waveform finite",
+        "frequency increases over time",
+        "normalization bounds output"
+      ],
+      "depends": [
+        "G1",
+        "C2"
+      ]
+    },
+    {
+      "id": "G3",
+      "phase": "G",
+      "name": "LIGO Signal Hunter",
+      "slug": "ligo-signal-hunter",
+      "concepts": [
+        "detection",
+        "noise",
+        "matched filtering",
+        "correlation",
+        "signal-to-noise ratio"
+      ],
+      "mvp": "Hide a chirp in noisy data; users choose templates and find correlation peaks.",
+      "ui": [
+        "noisy signal plot",
+        "template selector",
+        "correlation graph",
+        "detection score"
+      ],
+      "engine": [
+        "noise generator",
+        "template bank",
+        "cross-correlation",
+        "SNR heuristic"
+      ],
+      "challenges": [
+        "Detect hidden chirp",
+        "Choose best template",
+        "Reduce false positives"
+      ],
+      "tests": [
+        "correlation peak at injected signal",
+        "wrong template lower score",
+        "noise seeded reproducibly"
+      ],
+      "depends": [
+        "G2"
+      ]
+    }
+  ]
+}

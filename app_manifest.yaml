@@ -1,0 +1,288 @@
+project: spacetime-playground
+version: 0.1.0
+apps:
+  - id: A1
+    phase: A
+    slug: cosmic-scale-explorer
+    name: Cosmic Scale Explorer
+    depends: []
+  - id: A2
+    phase: A
+    slug: vector-field-playground
+    name: Vector Field Playground
+    depends: [A1]
+  - id: A3
+    phase: A
+    slug: slope-field-lab
+    name: Slope Field Lab
+    depends: [A2]
+  - id: A4
+    phase: A
+    slug: integrator-battle-arena
+    name: Integrator Battle Arena
+    depends: [A3]
+  - id: B1
+    phase: B
+    slug: force-sandbox
+    name: Force Sandbox
+    depends: [A4]
+  - id: B2
+    phase: B
+    slug: conservation-detective
+    name: Conservation Detective
+    depends: [B1]
+  - id: B3
+    phase: B
+    slug: action-minimizer
+    name: Action Minimizer
+    depends: [A4, B2]
+  - id: B4
+    phase: B
+    slug: gravity-well-simulator
+    name: Gravity Well Simulator
+    depends: [A4, B1]
+  - id: B5
+    phase: B
+    slug: kepler-law-verifier
+    name: Kepler Law Verifier
+    depends: [B4]
+  - id: B6
+    phase: B
+    slug: mini-solar-system-engine
+    name: Mini Solar System Engine
+    depends: [B4, B5]
+  - id: B7
+    phase: B
+    slug: tidal-force-explorer
+    name: Tidal Force Explorer
+    depends: [B6]
+  - id: C1
+    phase: C
+    slug: wave-tank
+    name: Wave Tank
+    depends: [A4]
+  - id: C2
+    phase: C
+    slug: spectrum-decomposer
+    name: Spectrum Decomposer
+    depends: [C1]
+  - id: C3
+    phase: C
+    slug: doppler-shift-visualizer
+    name: Doppler Shift Visualizer
+    depends: [C2]
+  - id: C4
+    phase: C
+    slug: blackbody-color-lab
+    name: Blackbody Color Lab
+    depends: [C2]
+  - id: C5
+    phase: C
+    slug: gas-particle-simulator
+    name: Gas Particle Simulator
+    depends: [B2]
+  - id: C6
+    phase: C
+    slug: fusion-energy-budget
+    name: Fusion Energy Budget
+    depends: [C4, C5]
+  - id: C7
+    phase: C
+    slug: star-balance-simulator
+    name: Star Balance Simulator
+    depends: [C5, C6]
+  - id: C8
+    phase: C
+    slug: hr-diagram-explorer
+    name: HR Diagram Explorer
+    depends: [C4, C7]
+  - id: D1
+    phase: D
+    slug: light-clock-simulator
+    name: Light Clock Simulator
+    depends: [C1]
+  - id: D2
+    phase: D
+    slug: lorentz-transformer
+    name: Lorentz Transformer
+    depends: [D1]
+  - id: D3
+    phase: D
+    slug: spacetime-diagram-editor
+    name: Spacetime Diagram Editor
+    depends: [D2]
+  - id: D4
+    phase: D
+    slug: proper-time-race
+    name: Proper Time Race
+    depends: [D3]
+  - id: D5
+    phase: D
+    slug: relativistic-rocket-lab
+    name: Relativistic Rocket Lab
+    depends: [D1, D2]
+  - id: E1
+    phase: E
+    slug: einstein-elevator
+    name: Einstein Elevator
+    depends: [D3]
+  - id: E2
+    phase: E
+    slug: geodesic-on-surfaces
+    name: Geodesic on Surfaces
+    depends: [A4, D3]
+  - id: E3
+    phase: E
+    slug: metric-playground
+    name: Metric Playground
+    depends: [D2, E2]
+  - id: E4
+    phase: E
+    slug: tensor-transformation-lab
+    name: Tensor Transformation Lab
+    depends: [E3]
+  - id: E5
+    phase: E
+    slug: parallel-transport-game
+    name: Parallel Transport Game
+    depends: [E2, E3]
+  - id: E6
+    phase: E
+    slug: curvature-matter-sandbox
+    name: Curvature-Matter Sandbox
+    depends: [E3, E5]
+  - id: F1
+    phase: F
+    slug: black-hole-orbit-lab
+    name: Black Hole Orbit Lab
+    depends: [B4, E3]
+  - id: F2
+    phase: F
+    slug: gravity-clock-comparator
+    name: Gravity Clock Comparator
+    depends: [F1, D4]
+  - id: F3
+    phase: F
+    slug: gravitational-lens-renderer
+    name: Gravitational Lens Renderer
+    depends: [F1, C1]
+  - id: F4
+    phase: F
+    slug: accretion-disk-simulator
+    name: Accretion Disk Simulator
+    depends: [F1, B6]
+  - id: F5
+    phase: F
+    slug: frame-dragging-explorer
+    name: Frame Dragging Explorer
+    depends: [F1, E6]
+  - id: F6
+    phase: F
+    slug: horizon-thermodynamics-toy-model
+    name: Horizon Thermodynamics Toy Model
+    depends: [F1]
+  - id: G1
+    phase: G
+    slug: binary-inspiral-simulator
+    name: Binary Inspiral Simulator
+    depends: [B6, F1]
+  - id: G2
+    phase: G
+    slug: gravitational-wave-chirp-lab
+    name: Gravitational Wave Chirp Lab
+    depends: [G1, C2]
+  - id: G3
+    phase: G
+    slug: ligo-signal-hunter
+    name: LIGO Signal Hunter
+    depends: [G2]
+  - id: H1
+    phase: H
+    slug: galaxy-distribution-viewer
+    name: Galaxy Distribution Viewer
+    depends: [A1]
+  - id: H2
+    phase: H
+    slug: expanding-grid-universe
+    name: Expanding Grid Universe
+    depends: [H1]
+  - id: H3
+    phase: H
+    slug: universe-equation-solver
+    name: Universe Equation Solver
+    depends: [H2, A4]
+  - id: H4
+    phase: H
+    slug: cosmic-redshift-calculator
+    name: Cosmic Redshift Calculator
+    depends: [H3, C3]
+  - id: H5
+    phase: H
+    slug: cmb-pixel-universe
+    name: CMB Pixel Universe
+    depends: [C2, H3]
+  - id: H6
+    phase: H
+    slug: galaxy-rotation-curve-lab
+    name: Galaxy Rotation Curve Lab
+    depends: [B4, H1]
+  - id: H7
+    phase: H
+    slug: dark-energy-slider
+    name: Dark Energy Slider
+    depends: [H3]
+  - id: H8
+    phase: H
+    slug: cosmic-timeline-builder
+    name: Cosmic Timeline Builder
+    depends: [H3, H4, H5]
+  - id: I1
+    phase: I
+    slug: wormhole-taxonomy-explorer
+    name: Wormhole Taxonomy Explorer
+    depends: [F1, E3]
+  - id: I2
+    phase: I
+    slug: wormhole-metric-builder
+    name: Wormhole Metric Builder
+    depends: [I1, E3]
+  - id: I3
+    phase: I
+    slug: embedding-diagram-renderer
+    name: Embedding Diagram Renderer
+    depends: [I2]
+  - id: I4
+    phase: I
+    slug: energy-condition-checker
+    name: Energy Condition Checker
+    depends: [I2]
+  - id: I5
+    phase: I
+    slug: traversability-stress-test
+    name: Traversability Stress Test
+    depends: [I2, B7]
+  - id: I6
+    phase: I
+    slug: wormhole-time-machine-lab
+    name: Wormhole Time Machine Lab
+    depends: [D4, I2, I7]
+  - id: I7
+    phase: I
+    slug: causality-loop-detector
+    name: Causality Loop Detector
+    depends: [D3]
+  - id: I8
+    phase: I
+    slug: paradox-simulator
+    name: Paradox Simulator
+    depends: [I7]
+  - id: I9
+    phase: I
+    slug: chronology-protection-toy-model
+    name: Chronology Protection Toy Model
+    depends: [I6, I7]
+  - id: I10
+    phase: I
+    slug: negative-energy-sandbox
+    name: Negative Energy Sandbox
+    depends: [I4]

@@ -1,0 +1,240 @@
+{
+  "phase": "E",
+  "title": "广义相对论前置",
+  "goal": "Convert the intuition of gravity from force to geometry.",
+  "apps": [
+    {
+      "id": "E1",
+      "phase": "E",
+      "name": "Einstein Elevator",
+      "slug": "einstein-elevator",
+      "concepts": [
+        "equivalence principle",
+        "acceleration",
+        "free fall",
+        "local inertial frames",
+        "gravity vs acceleration"
+      ],
+      "mvp": "Elevator scenarios: resting on Earth, accelerating in space, and free-falling.",
+      "ui": [
+        "scenario selector",
+        "ball/light ray animation",
+        "clock visualization",
+        "observer notes"
+      ],
+      "engine": [
+        "constant acceleration kinematics",
+        "local frame comparison",
+        "light ray bending cartoon model"
+      ],
+      "challenges": [
+        "Identify indistinguishable cases",
+        "Predict ball path",
+        "Explain local vs global limitation"
+      ],
+      "tests": [
+        "free-fall relative acceleration zero",
+        "accelerated frame pseudo-force",
+        "scenario labels consistent"
+      ],
+      "depends": [
+        "D3"
+      ]
+    },
+    {
+      "id": "E2",
+      "phase": "E",
+      "name": "Geodesic on Surfaces",
+      "slug": "geodesic-on-surfaces",
+      "concepts": [
+        "geodesics",
+        "curved surfaces",
+        "intrinsic geometry",
+        "Christoffel symbols",
+        "shortest paths"
+      ],
+      "mvp": "Launch particles on sphere, saddle, and torus surfaces along geodesic paths.",
+      "ui": [
+        "surface selector",
+        "launch controls",
+        "3D surface view",
+        "geodesic trace"
+      ],
+      "engine": [
+        "surface parameterization",
+        "geodesic ODE",
+        "numerical integration"
+      ],
+      "challenges": [
+        "Find great circle",
+        "Compare Euclidean straightness vs surface straightness",
+        "Observe geodesic divergence"
+      ],
+      "tests": [
+        "sphere great circle sanity check",
+        "state remains on parameter domain",
+        "stepper deterministic"
+      ],
+      "depends": [
+        "A4",
+        "D3"
+      ]
+    },
+    {
+      "id": "E3",
+      "phase": "E",
+      "name": "Metric Playground",
+      "slug": "metric-playground",
+      "concepts": [
+        "metric tensor",
+        "distance",
+        "spacetime interval",
+        "Euclidean",
+        "Minkowski",
+        "spherical coordinates"
+      ],
+      "mvp": "Choose a metric and see how the same coordinate difference has different length/interval.",
+      "ui": [
+        "metric selector",
+        "coordinate delta editor",
+        "distance/interval result",
+        "matrix display"
+      ],
+      "engine": [
+        "metric matrix functions",
+        "bilinear form",
+        "signature classifier"
+      ],
+      "challenges": [
+        "Find zero interval in Minkowski",
+        "Compare Euclidean vs spherical distance",
+        "Explain metric signature"
+      ],
+      "tests": [
+        "Euclidean norm",
+        "Minkowski interval",
+        "matrix symmetry"
+      ],
+      "depends": [
+        "D2",
+        "E2"
+      ]
+    },
+    {
+      "id": "E4",
+      "phase": "E",
+      "name": "Tensor Transformation Lab",
+      "slug": "tensor-transformation-lab",
+      "concepts": [
+        "tensors",
+        "coordinate transformations",
+        "components vs objects",
+        "index notation",
+        "Lorentz transforms"
+      ],
+      "mvp": "Transform vector/tensor components under rotations, scalings, and Lorentz boosts while invariant quantities remain fixed.",
+      "ui": [
+        "basis editor",
+        "component table",
+        "before/after diagram",
+        "invariant checker"
+      ],
+      "engine": [
+        "matrix transforms",
+        "covariant/contravariant toy model",
+        "invariant contraction"
+      ],
+      "challenges": [
+        "Preserve vector length under rotation",
+        "Show components change under basis change",
+        "Use Lorentz boost and preserve interval"
+      ],
+      "tests": [
+        "rotation preserves Euclidean norm",
+        "Lorentz preserves Minkowski interval",
+        "inverse transform consistency"
+      ],
+      "depends": [
+        "E3"
+      ]
+    },
+    {
+      "id": "E5",
+      "phase": "E",
+      "name": "Parallel Transport Game",
+      "slug": "parallel-transport-game",
+      "concepts": [
+        "curvature",
+        "parallel transport",
+        "holonomy",
+        "sphere",
+        "local flatness"
+      ],
+      "mvp": "Move an arrow around a closed path on a sphere and show it returns rotated.",
+      "ui": [
+        "sphere map",
+        "path drawer",
+        "transported arrow",
+        "angle difference readout"
+      ],
+      "engine": [
+        "parallel transport approximation",
+        "sphere path geometry",
+        "holonomy estimator"
+      ],
+      "challenges": [
+        "Make zero holonomy path",
+        "Increase enclosed area and observe angle",
+        "Explain curvature from transport"
+      ],
+      "tests": [
+        "small loop small rotation",
+        "equator loop sanity",
+        "deterministic transport"
+      ],
+      "depends": [
+        "E2",
+        "E3"
+      ]
+    },
+    {
+      "id": "E6",
+      "phase": "E",
+      "name": "Curvature-Matter Sandbox",
+      "slug": "curvature-matter-sandbox",
+      "concepts": [
+        "Einstein field equation intuition",
+        "stress-energy",
+        "curvature",
+        "geodesic motion",
+        "source fields"
+      ],
+      "mvp": "Conceptual toy model: draw energy density and see a generated curvature/potential field; particles follow geodesic-like paths.",
+      "ui": [
+        "density painter",
+        "curvature heatmap",
+        "particle launcher",
+        "explanation panel"
+      ],
+      "engine": [
+        "Poisson-like toy solver",
+        "field gradient",
+        "particle stepping"
+      ],
+      "challenges": [
+        "Create lens-like curvature",
+        "Compare high/low density",
+        "Explain why this is not full GR"
+      ],
+      "tests": [
+        "symmetric density gives symmetric field",
+        "field responds monotonically to density",
+        "toy solver stable"
+      ],
+      "depends": [
+        "E3",
+        "E5"
+      ]
+    }
+  ]
+}
